@@ -21,6 +21,7 @@ export default function Result() {
         <h1>เบอร์โทรศัพท์: {test.mobile}</h1>
         <h1>จํานวนห้องเรียนในคอร์ส: {test.countclassroom}</h1>
         <h1>Step2: {test.cours}</h1>
+        <h1>Test</h1>
       </div>
     </>
   )
