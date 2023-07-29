@@ -1,10 +1,22 @@
 import React, { useEffect, useState } from "react"
-import { Row, Col, Card, DatePicker, Button, Form, Space } from "antd"
+import {
+  Row,
+  Col,
+  Card,
+  DatePicker,
+  Button,
+  Form,
+  Space,
+  Checkbox,
+  Input,
+  Modal,
+} from "antd"
 import type { RangePickerProps, DatePickerProps } from "antd/es/date-picker"
 import dayjs from "dayjs"
 import { Dayjs } from "dayjs"
 import { AppDispatch, useAppSelector } from "@/redux/store"
 
+import CModal from "./Modal"
 import { optionsCours } from "./value"
 import { useDispatch } from "react-redux"
 import { saveData } from "@/redux/features/booking"
@@ -68,25 +80,27 @@ export default function Step3() {
                 />
               </Form.Item>
               <Space direction="vertical">
-                {showDateSelected.length > 0 ? (
-                  showDateSelected.map((el: string) => (
-                    <>
-                      <Space direction="vertical">
+                {showDateSelected.length > 0
+                  ? showDateSelected.map((el: string, i: any) => (
+                      <Space direction="vertical" key={i}>
                         <h3>วันที่ {el}</h3>
-                        <Space direction="horizontal">
-                          <Button style={{ backgroundColor: "#f2a393" }}>
-                            09.00 - 12.00
-                          </Button>
-                          <Button style={{ backgroundColor: "#f2a393" }}>
-                            13.00 - 16.00
-                          </Button>
+                        <Space direction="vertical">
+                          <CModal
+                            timetext={"09.00 - 12.00"}
+                            ckey={`first${i}`}
+                          />
+                          <CModal
+                            timetext={"09.00 - 12.00"}
+                            ckey={`second${i}`}
+                          />
+                          <Space>
+                            <Button type="text">กิจกรรมช่วงค่ำ</Button>
+                            <Checkbox />
+                          </Space>
                         </Space>
                       </Space>
-                    </>
-                  ))
-                ) : (
-                  <></>
-                )}
+                    ))
+                  : ""}
               </Space>
             </Card>
           </Col>
