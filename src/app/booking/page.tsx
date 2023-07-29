@@ -1,4 +1,4 @@
-import { Col, Row, Card } from 'antd'
+import { Col, Row, Card } from "antd"
 
 export default function Booking() {
   return (
@@ -9,6 +9,7 @@ export default function Booking() {
           <p>Card content</p>
           <p>Card content</p>
         </Card>
+        <p>Test</p>
       </Col>
     </Row>
   )
