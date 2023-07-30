@@ -13,6 +13,7 @@ import {
 } from "antd"
 import type { RangePickerProps, DatePickerProps } from "antd/es/date-picker"
 import dayjs from "dayjs"
+import type { Dayjs } from "dayjs"
 import { AppDispatch, useAppSelector } from "@/redux/store"
 
 import CModal from "./Modal"
@@ -24,7 +25,19 @@ const disableDates: any = []
 let dateArr: any = []
 let showDateSelected: any = []
 
+interface DateSubject {
+  date: string
+  subject: [
+    {
+      morning?: []
+      afternoon?: []
+    }
+  ]
+  activity: boolean
+}
+
 export default function Step3() {
+  const [arr, setArr] = useState<DateSubject[]>([])
   const booking = useAppSelector((state) => state.bookingReducer.value)
   const distpatch = useDispatch<AppDispatch>()
 
@@ -36,14 +49,28 @@ export default function Step3() {
     if (date) {
       distpatch(saveData({ dateSelect: dateString }))
       showDateSelected = []
-      console.log("Selected Date:", dateString)
+      // console.log("Selected Date:", dateString)
       showDateSelected.push(dateString)
+      let pushArr: DateSubject[] = [
+        {
+          date: dateString,
+          subject: [{ morning: [], afternoon: [] }],
+          activity: false,
+        },
+      ]
       for (let i = 1; i <= Number(targetOption?.day) - 1; i++) {
         const nextDate = date.clone().add(i, "days").format("YYYY-MM-DD")
         showDateSelected.push(nextDate)
-        console.log("Next Date:", nextDate)
+        pushArr.push({
+          date: nextDate,
+          subject: [{ morning: [], afternoon: [] }],
+          activity: false,
+        })
+        // console.log("Next Date:", nextDate)
       }
-      console.log(showDateSelected)
+      // console.log(pushArr)
+      setArr(pushArr)
+      // console.log(showDateSelected)
     }
   }
 
@@ -57,9 +84,19 @@ export default function Step3() {
     return disableDates.includes(dateString)
   }
 
+  function toggleCheckbox(e: any, i: any) {
+    const input = document.querySelector(
+      `input[name="checkday${i}"]`
+    ) as HTMLInputElement
+    console.log(arr[i])
+    const updatedArr = [...arr]
+    updatedArr[i].activity = input.checked
+    setArr(updatedArr)
+  }
+
   useEffect(() => {
-    showDateSelected = []
-  }, [showDateSelected])
+    console.log(arr)
+  }, [arr])
 
   return (
     <>
@@ -86,10 +123,10 @@ export default function Step3() {
                         <Space direction="vertical">
                           <CModal timetext={"09.00 - 12.00"} />
                           <CModal timetext={"13.00 - 16.00"} />
-                          <Space>
-                            <Button type="text">กิจกรรมช่วงค่ำ</Button>
-                            <Checkbox />
-                          </Space>
+                          <Checkbox
+                            onChange={(e) => toggleCheckbox(e, i)}
+                            name={`checkday${i}`}
+                          />
                         </Space>
                       </Space>
                     ))
