@@ -13,7 +13,6 @@ import {
 } from "antd"
 import type { RangePickerProps, DatePickerProps } from "antd/es/date-picker"
 import dayjs from "dayjs"
-import { Dayjs } from "dayjs"
 import { AppDispatch, useAppSelector } from "@/redux/store"
 
 import CModal from "./Modal"
@@ -25,22 +24,12 @@ const disableDates: any = []
 let dateArr: any = []
 let showDateSelected: any = []
 
-const disabledDate: RangePickerProps["disabledDate"] = (current) => {
-  if (current && current < dayjs().startOf("day")) {
-    return true
-  }
-
-  const dateString = current && current.format("YYYY-MM-DD")
-  if (dateString) dateArr.push(current)
-  return disableDates.includes(dateString)
-}
-
 export default function Step3() {
-  const cValue = useAppSelector((state) => state.bookingReducer.value)
+  const booking = useAppSelector((state) => state.bookingReducer.value)
   const distpatch = useDispatch<AppDispatch>()
 
   const targetOption = optionsCours.find(
-    (option) => option.value === cValue.cours
+    (option) => option.value === booking.cours
   )
 
   const changeDate: DatePickerProps["onChange"] = (date, dateString) => {
@@ -56,6 +45,16 @@ export default function Step3() {
       }
       console.log(showDateSelected)
     }
+  }
+
+  const disabledDate: RangePickerProps["disabledDate"] = (current) => {
+    if (current && current < dayjs().startOf("day")) {
+      return true
+    }
+
+    const dateString = current && current.format("YYYY-MM-DD")
+    if (dateString) dateArr.push(current)
+    return disableDates.includes(dateString)
   }
 
   useEffect(() => {
@@ -85,14 +84,8 @@ export default function Step3() {
                       <Space direction="vertical" key={i}>
                         <h3>วันที่ {el}</h3>
                         <Space direction="vertical">
-                          <CModal
-                            timetext={"09.00 - 12.00"}
-                            ckey={`first${i}`}
-                          />
-                          <CModal
-                            timetext={"09.00 - 12.00"}
-                            ckey={`second${i}`}
-                          />
+                          <CModal timetext={"09.00 - 12.00"} />
+                          <CModal timetext={"13.00 - 16.00"} />
                           <Space>
                             <Button type="text">กิจกรรมช่วงค่ำ</Button>
                             <Checkbox />

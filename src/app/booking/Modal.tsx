@@ -12,11 +12,11 @@ import {
   Divider,
 } from "antd"
 
-import { subjectAll } from "./value"
+import subjectAll from "./subject.json"
 
-export default function Cmodal(props: any) {
+export default function Cmodal({ timetext }: any) {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [valueFirst, setValueFirst] = useState(null)
+  const [valueFirst, setValueFirst] = useState(1)
   const [valueSecond, setValueSecond] = useState(null)
   const [selectedValue, setSelectedValue] = useState("")
 
@@ -25,19 +25,13 @@ export default function Cmodal(props: any) {
     setSelectedValue(String(e.target.title))
   }
 
-  const onChangeS = (e: RadioChangeEvent) => {
+  const onChangeS = async (e: RadioChangeEvent) => {
     setValueSecond(e.target.value)
     setSelectedValue(`${selectedValue} ${e.target.value}`)
   }
 
-  const resetToDefault = () => {
-    setSelectedValue("")
-    setValueFirst(null)
-    setValueSecond(null)
-  }
-
   const showModal = () => {
-    resetToDefault
+    setSelectedValue("")
     setIsModalOpen(true)
   }
 
@@ -49,12 +43,14 @@ export default function Cmodal(props: any) {
     setIsModalOpen(false)
   }
 
-  useEffect(() => {}, [valueFirst, valueSecond, selectedValue])
+  useEffect(() => {
+    console.log(valueFirst)
+  }, [])
 
   return (
     <>
       <Space direction="horizontal">
-        <Button type="text">{props.timetext}</Button>
+        <Button type="text">{timetext}</Button>
         <Button type="primary" onClick={showModal}>
           เลือกวิชา
         </Button>
@@ -66,7 +62,6 @@ export default function Cmodal(props: any) {
         onOk={handleOk}
         onCancel={handleCancel}
         width={720}
-        key={props.ckey}
       >
         <Row>
           <Col span={12}>
