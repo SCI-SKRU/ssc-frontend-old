@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   Button,
   Modal,
@@ -11,23 +11,33 @@ import {
   Col,
   Divider,
 } from "antd"
-import type { RadioGroupProps } from "antd"
+
+import { subjectAll } from "./value"
 
 export default function Cmodal(props: any) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [valueFirst, setValueFirst] = useState(null)
   const [valueSecond, setValueSecond] = useState(null)
+  const [selectedValue, setSelectedValue] = useState("")
 
   const onChangeF = (e: RadioChangeEvent) => {
-    console.log("radio checked", e.target.value)
     setValueFirst(e.target.value)
+    setSelectedValue(String(e.target.title))
   }
+
   const onChangeS = (e: RadioChangeEvent) => {
-    console.log("radio checked", e.target.value)
     setValueSecond(e.target.value)
+    setSelectedValue(`${selectedValue} ${e.target.value}`)
+  }
+
+  const resetToDefault = () => {
+    setSelectedValue("")
+    setValueFirst(null)
+    setValueSecond(null)
   }
 
   const showModal = () => {
+    resetToDefault
     setIsModalOpen(true)
   }
 
@@ -39,17 +49,7 @@ export default function Cmodal(props: any) {
     setIsModalOpen(false)
   }
 
-  const radioItems = [
-    { value: 1, title: "ฟิสิก" },
-    { value: 2, title: "เคมี" },
-    { value: 3, title: "ชีววิทยา จุลชีววิทยาและเทคโนโลยีชีวภาพ" },
-    { value: 4, title: "คณิตศาสตร" },
-    { value: 5, title: "คอมพิวเตอรและเทคโนโลยีสารสนเทศ" },
-    { value: 6, title: "วิทยาศาสตรประยุกตและนวัตกรรม" },
-    { value: 7, title: "วิทยาศาสตรสิ่งแวดลอม" },
-    { value: 8, title: "คหกรรม" },
-    { value: 9, title: "วิทยาศาสตรสุขภาพ" },
-  ]
+  useEffect(() => {}, [valueFirst, valueSecond, selectedValue])
 
   return (
     <>
@@ -58,7 +58,7 @@ export default function Cmodal(props: any) {
         <Button type="primary" onClick={showModal}>
           เลือกวิชา
         </Button>
-        <Input placeholder="Basic usage" value={"อังกฤษ"} disabled />
+        <Input disabled value={selectedValue} />
       </Space>
       <Modal
         title="เลือกหมวดวิชา"
@@ -66,15 +66,16 @@ export default function Cmodal(props: any) {
         onOk={handleOk}
         onCancel={handleCancel}
         width={720}
+        key={props.ckey}
       >
         <Row>
           <Col span={12}>
             <Divider orientation="left">เลือกวิชาหลัก</Divider>
             <Form.Item name="firstSub">
-              <Radio.Group onChange={onChangeF} value={valueFirst}>
+              <Radio.Group name="test0" onChange={onChangeF} value={valueFirst}>
                 <Space style={{ minWidth: "360px" }} direction="vertical">
-                  {radioItems.map((item, i) => (
-                    <Radio key={i} value={item.value}>
+                  {subjectAll.map((item, i) => (
+                    <Radio key={i} value={item.id} title={item.title}>
                       {item.title}
                     </Radio>
                   ))}
@@ -83,43 +84,67 @@ export default function Cmodal(props: any) {
             </Form.Item>
           </Col>
           <Col span={12}>
-            {true && (
+            {valueFirst !== null && (
               <>
                 <Divider orientation="left">เลือกวิชาย่อย</Divider>
-                <p>test 1</p>
+                <p>ประถมศึกษา (ป.1 - ป.6)</p>
                 <Radio.Group
                   name="test1"
                   onChange={onChangeS}
                   value={valueSecond}
                 >
                   <Space style={{ minWidth: "360px" }} direction="vertical">
-                    <Radio value={1}>test1</Radio>
-                    <Radio value={2}>test2</Radio>
-                    <Radio value={3}>test3</Radio>
+                    {subjectAll
+                      .find((subject) => subject.id === valueFirst)
+                      ?.level?.map((item, i) => (
+                        <div key={i}>
+                          {item.first.map((item2) => (
+                            <Radio value={item2.code} key={item2.code}>
+                              {item2.msg}
+                            </Radio>
+                          ))}
+                        </div>
+                      ))}
                   </Space>
                 </Radio.Group>
-                <p>test 2</p>
+                <p>มัธยมศึกษาตอนตน (ม.1 - ม.3)</p>
                 <Radio.Group
-                  name="test1"
+                  name="test2"
                   onChange={onChangeS}
                   value={valueSecond}
                 >
                   <Space style={{ minWidth: "360px" }} direction="vertical">
-                    <Radio value={4}>test4</Radio>
-                    <Radio value={5}>test5</Radio>
-                    <Radio value={6}>test6</Radio>
+                    {subjectAll
+                      .find((subject) => subject.id === valueFirst)
+                      ?.level?.map((item, i) => (
+                        <div key={i}>
+                          {item.second.map((item2) => (
+                            <Radio value={item2.code} key={item2.code}>
+                              {item2.msg}
+                            </Radio>
+                          ))}
+                        </div>
+                      ))}
                   </Space>
                 </Radio.Group>
-                <p>test 3</p>
+                <p>มัธยมศึกษาตอนปลาย (ม.4 - ม.6)</p>
                 <Radio.Group
-                  name="test1"
+                  name="test3"
                   onChange={onChangeS}
                   value={valueSecond}
                 >
                   <Space style={{ minWidth: "360px" }} direction="vertical">
-                    <Radio value={7}>test7</Radio>
-                    <Radio value={8}>test8</Radio>
-                    <Radio value={9}>test9</Radio>
+                    {subjectAll
+                      .find((subject) => subject.id === valueFirst)
+                      ?.level?.map((item, i) => (
+                        <div key={i}>
+                          {item.third.map((item2) => (
+                            <Radio value={item2.code} key={item2.code}>
+                              {item2.msg}
+                            </Radio>
+                          ))}
+                        </div>
+                      ))}
                   </Space>
                 </Radio.Group>
               </>
