@@ -88,15 +88,16 @@ export default function Step3() {
     const input = document.querySelector(
       `input[name="checkday${i}"]`
     ) as HTMLInputElement
-    console.log(arr[i])
     const updatedArr = [...arr]
     updatedArr[i].activity = input.checked
     setArr(updatedArr)
+    console.log(arr)
   }
 
   useEffect(() => {
-    console.log(arr)
-  }, [arr])
+    showDateSelected = []
+    console.log
+  }, [])
 
   return (
     <>
@@ -116,21 +117,23 @@ export default function Step3() {
                 />
               </Form.Item>
               <Space direction="vertical">
-                {showDateSelected.length > 0
-                  ? showDateSelected.map((el: string, i: any) => (
-                      <Space direction="vertical" key={i}>
-                        <h3>วันที่ {el}</h3>
-                        <Space direction="vertical">
-                          <CModal timetext={"09.00 - 12.00"} />
-                          <CModal timetext={"13.00 - 16.00"} />
+                {showDateSelected.length > 0 &&
+                  showDateSelected.map((el: string, i: any) => (
+                    <Space direction="vertical" key={i}>
+                      <h3>วันที่ {el}</h3>
+                      <Space direction="vertical">
+                        <CModal timetext={"09.00 - 12.00"} />
+                        <CModal timetext={"13.00 - 16.00"} />
+                        <Space>
+                          <Button type="text">กิจกรรมช่วงค่ำ</Button>
                           <Checkbox
                             onChange={(e) => toggleCheckbox(e, i)}
                             name={`checkday${i}`}
                           />
                         </Space>
                       </Space>
-                    ))
-                  : ""}
+                    </Space>
+                  ))}
               </Space>
             </Card>
           </Col>

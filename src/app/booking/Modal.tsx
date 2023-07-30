@@ -16,7 +16,7 @@ import subjectAll from "./subject.json"
 
 export default function Cmodal({ timetext }: any) {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [valueFirst, setValueFirst] = useState(1)
+  const [valueFirst, setValueFirst] = useState<number>(1)
   const [valueSecond, setValueSecond] = useState(null)
   const [selectedValue, setSelectedValue] = useState("")
 
@@ -28,6 +28,25 @@ export default function Cmodal({ timetext }: any) {
   const onChangeS = async (e: RadioChangeEvent) => {
     setValueSecond(e.target.value)
     setSelectedValue(`${selectedValue} ${e.target.value}`)
+    let youSeleced = ""
+    const subject = document.querySelectorAll(`input[name="subject"]`)
+    const mainsubject = subject.forEach((item, i) => {
+      const itemNow = item as HTMLInputElement
+      if (itemNow.checked) {
+        youSeleced += itemNow.value
+        // console.log(itemNow.value)
+      }
+    })
+
+    const subsubject = document.querySelectorAll(`input[name="subsubject"]`)
+    const now = subsubject.forEach((item, i) => {
+      const itemNow = item as HTMLInputElement
+      if (itemNow.checked) {
+        youSeleced += ` ${itemNow.value}`
+        // console.log(itemNow.value)
+      }
+    })
+    console.log(youSeleced)
   }
 
   const showModal = () => {
@@ -44,8 +63,8 @@ export default function Cmodal({ timetext }: any) {
   }
 
   useEffect(() => {
-    console.log(valueFirst)
-  }, [])
+    valueFirst
+  }, [valueFirst])
 
   return (
     <>
@@ -66,11 +85,20 @@ export default function Cmodal({ timetext }: any) {
         <Row>
           <Col span={12}>
             <Divider orientation="left">เลือกวิชาหลัก</Divider>
-            <Form.Item name="firstSub">
-              <Radio.Group name="test0" onChange={onChangeF} value={valueFirst}>
+            <Form.Item>
+              <Radio.Group
+                name="subject"
+                onChange={onChangeF}
+                value={valueFirst}
+              >
                 <Space style={{ minWidth: "360px" }} direction="vertical">
                   {subjectAll.map((item, i) => (
-                    <Radio key={i} value={item.id} title={item.title}>
+                    <Radio
+                      key={i}
+                      value={item.id}
+                      title={item.title}
+                      disabled={item.disable}
+                    >
                       {item.title}
                     </Radio>
                   ))}
@@ -84,7 +112,7 @@ export default function Cmodal({ timetext }: any) {
                 <Divider orientation="left">เลือกวิชาย่อย</Divider>
                 <p>ประถมศึกษา (ป.1 - ป.6)</p>
                 <Radio.Group
-                  name="test1"
+                  name="subsubject"
                   onChange={onChangeS}
                   value={valueSecond}
                 >
@@ -92,19 +120,19 @@ export default function Cmodal({ timetext }: any) {
                     {subjectAll
                       .find((subject) => subject.id === valueFirst)
                       ?.level?.map((item, i) => (
-                        <div key={i}>
+                        <Space direction="vertical" key={i}>
                           {item.first.map((item2) => (
                             <Radio value={item2.code} key={item2.code}>
                               {item2.msg}
                             </Radio>
                           ))}
-                        </div>
+                        </Space>
                       ))}
                   </Space>
                 </Radio.Group>
                 <p>มัธยมศึกษาตอนตน (ม.1 - ม.3)</p>
                 <Radio.Group
-                  name="test2"
+                  name="subsubject"
                   onChange={onChangeS}
                   value={valueSecond}
                 >
@@ -112,19 +140,19 @@ export default function Cmodal({ timetext }: any) {
                     {subjectAll
                       .find((subject) => subject.id === valueFirst)
                       ?.level?.map((item, i) => (
-                        <div key={i}>
+                        <Space direction="vertical" key={i}>
                           {item.second.map((item2) => (
                             <Radio value={item2.code} key={item2.code}>
                               {item2.msg}
                             </Radio>
                           ))}
-                        </div>
+                        </Space>
                       ))}
                   </Space>
                 </Radio.Group>
                 <p>มัธยมศึกษาตอนปลาย (ม.4 - ม.6)</p>
                 <Radio.Group
-                  name="test3"
+                  name="subsubject"
                   onChange={onChangeS}
                   value={valueSecond}
                 >
@@ -132,13 +160,13 @@ export default function Cmodal({ timetext }: any) {
                     {subjectAll
                       .find((subject) => subject.id === valueFirst)
                       ?.level?.map((item, i) => (
-                        <div key={i}>
+                        <Space direction="vertical" key={i}>
                           {item.third.map((item2) => (
                             <Radio value={item2.code} key={item2.code}>
                               {item2.msg}
                             </Radio>
                           ))}
-                        </div>
+                        </Space>
                       ))}
                   </Space>
                 </Radio.Group>

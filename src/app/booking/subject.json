@@ -2,6 +2,7 @@
     {
       "id": 1,
       "title": "ฟิสิก",
+      "disable": false,
       "level": [
         {
           "first": [
@@ -64,6 +65,7 @@
     {
       "id": 2,
       "title": "เคมี",
+      "disable": true,
       "level": [
         {
           "first": [
@@ -106,6 +108,7 @@
     {
       "id": 3,
       "title": "ชีววิทยา จุลชีววิทยาและเทคโนโลยีชีวภาพ",
+      "disable": false,
       "level": [
         {
           "first": [
