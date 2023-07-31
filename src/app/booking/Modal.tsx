@@ -12,7 +12,7 @@ import {
   Divider,
 } from "antd"
 
-import subjectAll from "./subject.json"
+import subjectAll from "./api/subject.json"
 
 export default function Cmodal({ timetext }: any) {
   const [isModalOpen, setIsModalOpen] = useState(false)

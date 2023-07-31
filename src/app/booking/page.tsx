@@ -10,7 +10,7 @@ import Result from "./result"
 
 import { saveData, showData } from "@/redux/features/booking"
 import { useDispatch } from "react-redux"
-import { AppDispatch } from "@/redux/store"
+import { AppDispatch, useAppSelector } from "@/redux/store"
 
 const steps = [
   {
@@ -34,11 +34,26 @@ const steps = [
 export default function Booking() {
   const { token } = theme.useToken()
   const [current, setCurrent] = useState(0)
+  const booking = useAppSelector((state) => state.bookingReducer.value)
 
   const distpatch = useDispatch<AppDispatch>()
 
   const next = (values: any) => {
-    distpatch(saveData(values))
+    if (values.dateSelect && typeof values == "object") {
+      let date = values.dateSelect
+      let cours = booking.cours
+      let dateSelected: any = []
+      if (cours < 3) cours = 1
+      else if (cours < 5) cours = 2
+      else if (cours < 7) cours = 3
+      for (let i = 0; i < cours; i++) {
+        const nextDate = date.clone().add(i, "days").format("YYYY-MM-DD")
+        dateSelected.push(nextDate)
+      }
+      distpatch(saveData({ dateSelect: dateSelected }))
+    } else {
+      distpatch(saveData(values))
+    }
     setCurrent(current + 1)
   }
 

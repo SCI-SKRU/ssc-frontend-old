@@ -7,7 +7,7 @@ type InitialState = {
 type BookingState = {
   schoolname: string
   schoolsize: string
-  subaddress: string
+  subaddress: string[]
   countconnect: number
   operator: string
   position: string
@@ -15,14 +15,14 @@ type BookingState = {
   mobile: string
   countclassroom: string
   cours: number
-  dateSelect: string
+  dateSelect: string[]
 }
 
 const initialState = {
   value: {
     schoolname: "",
     schoolsize: "",
-    subaddress: "",
+    subaddress: [],
     countconnect: 0,
     operator: "",
     position: "",
@@ -30,7 +30,7 @@ const initialState = {
     mobile: "",
     countclassroom: "",
     cours: 0,
-    dateSelect: "",
+    dateSelect: [],
   } as BookingState,
 } as InitialState
 
@@ -41,24 +41,6 @@ export const booking = createSlice({
     showData: () => {
       return initialState
     },
-    // befor
-    // saveData: (state, action: PayloadAction<string>) => {
-    //   return {
-    //     value: {
-    //       schoolname: action.payload,
-    //       schoolsize: action.payload,
-    //       subaddress: action.payload,
-    //       countconnect: 1,
-    //       operator: action.payload,
-    //       position: action.payload,
-    //       email: action.payload,
-    //       mobile: action.payload,
-    //       countclassroom: action.payload,
-    //       cours: action.payload,
-    //     },
-    //   }
-    // },
-    // after
     saveData: (state, action: PayloadAction<Partial<BookingState>>) => {
       return {
         value: {

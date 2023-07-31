@@ -1,5 +1,6 @@
 import { Form, Input, Select, Cascader, InputNumber, Radio, Space } from "antd"
 import React, { useEffect, useState } from "react"
+import { useAppSelector } from "@/redux/store"
 
 // path now
 import { schoolsize, getValue, Optionz } from "./value"
@@ -11,11 +12,14 @@ const layout = {
   wrapperCol: { span: 12 },
 }
 
-// for dev
-const required = false
+// for dev step1 required ?
+const required: boolean = false
 
 export default function Step1() {
   const [options, setOptions] = useState<Optionz[]>([])
+
+  const selected = useAppSelector((state) => state.bookingReducer.value)
+  const countConnect = 1 // default 1
 
   async function getOptions() {
     const result = await getValue()
@@ -24,7 +28,7 @@ export default function Step1() {
 
   useEffect(() => {
     getOptions()
-  }, [options])
+  }, [])
 
   return (
     <>
@@ -35,7 +39,7 @@ export default function Step1() {
           name="schoolname"
           rules={[{ required: required, message: "โปรดกรอกชื่อโรงเรียน" }]}
         >
-          <Input placeholder="ชื่อโรงเรียน" />
+          <Input placeholder="ชื่อโรงเรียน" value={selected.schoolname} />
         </Form.Item>
 
         <Form.Item
@@ -43,7 +47,11 @@ export default function Step1() {
           label="ขนาดโรงเรียน"
           rules={[{ required: required, message: "โปรดเลือกขนาดโรงเรียน" }]}
         >
-          <Select placeholder="ขนาดโรงเรียน" allowClear>
+          <Select
+            placeholder="ขนาดโรงเรียน"
+            value={selected.schoolsize}
+            allowClear
+          >
             {schoolsize.map((el, index) => (
               <Option value={el.option} key={index}>
                 {el.size}
@@ -59,11 +67,15 @@ export default function Step1() {
             { required: required, message: "โปรดเลือกจังหวัด/อำเภอ/ตำบล" },
           ]}
         >
-          <Cascader options={options} placeholder="จังหวัด/อำเภอ/ตำบล" />
+          <Cascader
+            value={selected.subaddress}
+            options={options}
+            placeholder="จังหวัด/อำเภอ/ตำบล"
+          />
         </Form.Item>
 
         <Form.Item label="เข้าร่วมครั้งที่">
-          <InputNumber value={0} disabled />
+          <InputNumber value={countConnect} disabled />
         </Form.Item>
 
         <Form.Item
@@ -71,28 +83,28 @@ export default function Step1() {
           label="ผู้ดำเนินการ"
           rules={[{ required: required, message: "โปรดกรอกชื่อผู้ดำเนินการ" }]}
         >
-          <Input placeholder="ผู้ดำเนินการ" />
+          <Input placeholder="ผู้ดำเนินการ" value={selected.operator} />
         </Form.Item>
         <Form.Item
           name="position"
           label="ตำแหน่ง"
           rules={[{ required: required, message: "โปรดกรอกตำแหน่ง" }]}
         >
-          <Input placeholder="ตำแหน่ง" />
+          <Input placeholder="ตำแหน่ง" value={selected.position} />
         </Form.Item>
         <Form.Item
           name="email"
           label="อีเมล"
           rules={[{ required: required, message: "โปรดกรอกอีเมล" }]}
         >
-          <Input placeholder="อีเมล" />
+          <Input placeholder="อีเมล" value={selected.email} />
         </Form.Item>
         <Form.Item
           name="mobile"
           label="เบอร์โทรศัพท์"
           rules={[{ required: required, message: "โปรดกรอกเบอร์โทรศัพท์" }]}
         >
-          <Input placeholder="เบอร์โทรศัพท์" />
+          <Input placeholder="เบอร์โทรศัพท์" value={selected.mobile} />
         </Form.Item>
 
         <Form.Item
@@ -100,7 +112,7 @@ export default function Step1() {
           label="จํานวนห้องเรียนในคอร์ส (ห้องละ 40 คน)"
           rules={[{ required: required, message: "โปรดเลือกจำนวนห้องเรียน" }]}
         >
-          <Radio.Group name="countclassroom">
+          <Radio.Group name="countclassroom" value={selected.countclassroom}>
             <Space direction="horizontal">
               <Radio value={1}>1 ห้อง</Radio>
               <Radio value={2}>2 ห้อง</Radio>
