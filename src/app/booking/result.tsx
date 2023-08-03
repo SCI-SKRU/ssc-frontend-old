@@ -1,28 +1,51 @@
 import React, { useEffect } from "react"
+import { Card, Col, Row } from "antd"
 import { useAppSelector } from "@/redux/store"
 
-export default function Result() {
+export default function Result({ form }: any) {
   const test = useAppSelector((state) => state.bookingReducer.value)
+  const formValues = form.getFieldsValue()
+  // console.log(test)
 
-  useEffect(() => {
-    console.log(test)
-  }, [])
+  useEffect(() => {}, [])
 
   return (
     <>
-      <div>
-        <h1>โรงเรียน: {test.schoolname}</h1>
-        <h1>ขนาดโรงเรียน: {test.schoolsize}</h1>
-        <h1>จังหวัด/อำเภอ/ตำบล: {test.subaddress}</h1>
-        <h1>เข้าร่วมครั้งที่: {test.countconnect}</h1>
-        <h1>ผู้ดำเนินการ: {test.operator}</h1>
-        <h1>ตำแหน่ง: {test.position}</h1>
-        <h1>อีเมล: {test.email}</h1>
-        <h1>เบอร์โทรศัพท์: {test.mobile}</h1>
-        <h1>จํานวนห้องเรียนในคอร์ส: {test.countclassroom}</h1>
-        <h1>Step2: {test.cours}</h1>
-        <h1>Test</h1>
-      </div>
+      <Row gutter={[16, 16]} style={{ padding: "12px" }}>
+        <Col span={24}>
+          <Card
+            title="Card title"
+            bordered={false}
+            style={{ textAlign: "left" }}
+          >
+            <h4>
+              โรงงเรียน: <span>{test.schoolname}</span>
+            </h4>
+            <h4>
+              ที่อยู่: <span>{test.subaddress}</span>
+            </h4>
+            <h4>
+              ผู้ดำเนินการจอง: <span>{test.operator}</span>
+            </h4>
+            <h4>
+              อีเมล: <span>{test.email}</span>
+            </h4>
+            <h4>
+              จำนวนห้้องเรียน: <span>{test.countclassroom}</span>
+            </h4>
+          </Card>
+        </Col>
+        <Col span={24}>
+          <Card title="Card title" bordered={false}>
+            Card content
+          </Card>
+        </Col>
+        <Col span={24}>
+          <Card title="Card title" bordered={false}>
+            Card content
+          </Card>
+        </Col>
+      </Row>
     </>
   )
 }

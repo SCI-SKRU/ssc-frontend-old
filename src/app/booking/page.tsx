@@ -1,6 +1,15 @@
 "use client"
 
-import { Col, Row, Button, Steps, message, theme, Form } from "antd"
+import {
+  Col,
+  Row,
+  Button,
+  Steps,
+  message,
+  theme,
+  Form,
+  FormInstance,
+} from "antd"
 import { useState } from "react"
 // import components step
 import Step1 from "./step1"
@@ -11,35 +20,41 @@ import Result from "./result"
 import { saveData, showData } from "@/redux/features/booking"
 import { useDispatch } from "react-redux"
 import { AppDispatch, useAppSelector } from "@/redux/store"
-
-const steps = [
-  {
-    title: "Step 1",
-    content: <Step1 />,
-  },
-  {
-    title: "Step 2",
-    content: <Step2 />,
-  },
-  {
-    title: "Step 3",
-    content: <Step3 />,
-  },
-  {
-    title: "Result",
-    content: <Result />,
-  },
-]
+import React from "react"
 
 export default function Booking() {
   const { token } = theme.useToken()
   const [current, setCurrent] = useState(0)
   const booking = useAppSelector((state) => state.bookingReducer.value)
+  const [form] = Form.useForm()
+  const formRef = React.useRef<FormInstance>(null)
+
+  const steps = [
+    {
+      title: "Step 1",
+      content: <Step1 form={form} />,
+    },
+    {
+      title: "Step 2",
+      content: <Step2 />,
+    },
+    {
+      title: "Step 3",
+      content: <Step3 formRef={formRef} form={form} />,
+    },
+    {
+      title: "Result",
+      content: <Result form={form} />,
+    },
+  ]
 
   const distpatch = useDispatch<AppDispatch>()
 
   const next = (values: any) => {
-    if (values.dateSelect && typeof values == "object") {
+    // เช็คเลือก คอร์ส Step2
+    console.log(values)
+    if (values.dateSelect) {
+      console.log("First")
       let date = values.dateSelect
       let cours = booking.cours
       let dateSelected: any = []
@@ -50,8 +65,10 @@ export default function Booking() {
         const nextDate = date.clone().add(i, "days").format("YYYY-MM-DD")
         dateSelected.push(nextDate)
       }
+
       distpatch(saveData({ dateSelect: dateSelected }))
     } else {
+      console.log("Second")
       distpatch(saveData(values))
     }
     setCurrent(current + 1)
@@ -78,6 +95,8 @@ export default function Booking() {
         <Col span={12} offset={6}>
           <Steps current={current} items={items} />
           <Form
+            ref={formRef}
+            form={form}
             onFinish={next}
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 12 }}

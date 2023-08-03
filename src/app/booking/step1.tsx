@@ -1,4 +1,13 @@
-import { Form, Input, Select, Cascader, InputNumber, Radio, Space } from "antd"
+import {
+  Form,
+  Input,
+  Select,
+  Cascader,
+  InputNumber,
+  Radio,
+  Space,
+  Button,
+} from "antd"
 import React, { useEffect, useState } from "react"
 import { useAppSelector } from "@/redux/store"
 
@@ -13,9 +22,9 @@ const layout = {
 }
 
 // for dev step1 required ?
-const required: boolean = false
+const required: boolean = true
 
-export default function Step1() {
+export default function Step1({ form }: any) {
   const [options, setOptions] = useState<Optionz[]>([])
 
   const selected = useAppSelector((state) => state.bookingReducer.value)
@@ -24,6 +33,20 @@ export default function Step1() {
   async function getOptions() {
     const result = await getValue()
     setOptions(result)
+  }
+
+  const onFill = () => {
+    form.setFieldsValue({
+      schoolname: "สังคมอิสลาม",
+      schoolsize: "ขนาดกลาง",
+      subaddress: ["a1", "b2", "c3"],
+      countconnect: 1,
+      operator: "ผมเอง",
+      position: "ครู",
+      email: "radis@gmail.com",
+      mobile: "0255411588",
+      countclassroom: 1,
+    })
   }
 
   useEffect(() => {
@@ -74,7 +97,7 @@ export default function Step1() {
           />
         </Form.Item>
 
-        <Form.Item label="เข้าร่วมครั้งที่">
+        <Form.Item name="countconnect" label="เข้าร่วมครั้งที่">
           <InputNumber value={countConnect} disabled />
         </Form.Item>
 
@@ -120,6 +143,7 @@ export default function Step1() {
             </Space>
           </Radio.Group>
         </Form.Item>
+        <Button onClick={onFill}>Auto Fill</Button>
       </div>
     </>
   )
