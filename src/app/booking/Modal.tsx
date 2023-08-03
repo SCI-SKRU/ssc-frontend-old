@@ -21,8 +21,8 @@ type Props = {
   ckey: number
 }
 
-// const testSuject = "ฟิสิกส์"
-const testSuject = ""
+const testSuject = "ฟิสิกส์"
+// const testSuject = ""
 
 function CModal({
   dayString,
@@ -50,6 +50,7 @@ function CModal({
   return (
     <>
       <Divider orientation="left">{convertToThaiDate(dayString)}</Divider>
+      {/* <Divider orientation="left">วันที่ {dayString}</Divider> */}
 
       <Form.Item
         name={[`${date}`, "day"]}

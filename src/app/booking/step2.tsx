@@ -1,12 +1,15 @@
 import { Button, Form, Radio } from "antd"
 import type { CheckboxOptionType } from "antd"
 import React, { useEffect, useState } from "react"
-import { useAppSelector } from "@/redux/store"
+import { AppDispatch, useAppSelector } from "@/redux/store"
 import { getDataCourse } from "./api/routes"
+import { saveData } from "@/redux/features/booking"
+import { useDispatch } from "react-redux"
 
 export default function Step2() {
   const [course, setCourse] = useState<CheckboxOptionType[]>([])
   const selected = useAppSelector((state) => state.bookingReducer.value.cours)
+  const distpatch = useDispatch<AppDispatch>()
 
   async function fetchCourse() {
     const result = await getDataCourse()
@@ -19,6 +22,7 @@ export default function Step2() {
 
   useEffect(() => {
     fetchCourse()
+    distpatch(saveData({ dateSelect: [] }))
   }, [])
 
   return (

@@ -51,10 +51,9 @@ export default function Booking() {
   const distpatch = useDispatch<AppDispatch>()
 
   const next = (values: any) => {
-    // เช็คเลือก คอร์ส Step2
-    console.log(values)
+    console.log(booking)
+    // step3
     if (values.dateSelect) {
-      console.log("First")
       let date = values.dateSelect
       let cours = booking.cours
       let dateSelected: any = []
@@ -65,10 +64,8 @@ export default function Booking() {
         const nextDate = date.clone().add(i, "days").format("YYYY-MM-DD")
         dateSelected.push(nextDate)
       }
-
       distpatch(saveData({ dateSelect: dateSelected }))
     } else {
-      console.log("Second")
       distpatch(saveData(values))
     }
     setCurrent(current + 1)
