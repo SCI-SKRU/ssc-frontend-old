@@ -5,7 +5,7 @@ import { useAppSelector } from "@/redux/store"
 export default function Result({ form }: any) {
   const test = useAppSelector((state) => state.bookingReducer.value)
   const formValues = form.getFieldsValue()
-  // console.log(test)
+  console.log(test)
 
   useEffect(() => {}, [])
 

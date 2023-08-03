@@ -1,59 +1,33 @@
-import React, { useEffect, useState } from "react"
-import {
-  Row,
-  Col,
-  Card,
-  DatePicker,
-  Button,
-  Form,
-  Space,
-  Checkbox,
-  Input,
-  Modal,
-  FormInstance,
-  Alert,
-  Divider,
-} from "antd"
-import type { RangePickerProps, DatePickerProps } from "antd/es/date-picker"
-import dayjs from "dayjs"
-import type { Dayjs } from "dayjs"
+"use client"
+import React from "react"
+import { Form, DatePicker, DatePickerProps } from "antd"
+
+import CModal from "./Modal"
+
 import "dayjs/locale/th"
 import locale from "antd/es/date-picker/locale/th_TH"
 import { AppDispatch, useAppSelector } from "@/redux/store"
-
-import CModal from "./Modal"
-import CModal2 from "./Modal2"
-import { optionsCours } from "./value"
 import { useDispatch } from "react-redux"
 import { saveData } from "@/redux/features/booking"
-import { getDataCourse } from "./api/routes"
-import { CheckboxChangeEvent } from "antd/es/checkbox"
-
-const dateFormat = "YYYY/MM/DD"
-
-// disable from database
-const disableDates: any = []
-let dateSelected: any[] = []
 
 export default function Step3({ formRef, form }: any) {
-  const [course, setCourse] = useState<[]>([])
-  const [dateVal, setDateVal] = useState<Dayjs>()
-  const [error, setError] = useState<string>("")
-  const [disableCheckbox, setDisableCheckbox] = useState(false)
   const booking = useAppSelector((state) => state.bookingReducer.value)
   const distpatch = useDispatch<AppDispatch>()
 
-  async function fetchCourse() {
-    const result = await getDataCourse()
-    setCourse(result)
+  let dateSelected = booking.dateSelect
+  let timeSlot = booking.cours
+  let day = 0
+  let disableDates: any[] = []
+
+  if (timeSlot == 3 || timeSlot == 4) {
+    day = 2
+  } else if (timeSlot == 5 || timeSlot == 6) {
+    day = 3
   }
 
   const changeDate: DatePickerProps["onChange"] = (date, dateString) => {
-    setDisableCheckbox(false)
     if (date) {
-      setDateVal(date)
       dateSelected = []
-      setError("")
       let cours = booking.cours
       if (cours < 3) cours = 1
       else if (cours < 5) cours = 2
@@ -62,7 +36,7 @@ export default function Step3({ formRef, form }: any) {
         const nextDate = date.clone().add(i, "days").format("YYYY-MM-DD")
         dateSelected.push(nextDate)
         if (disableDates.includes(nextDate)) {
-          setError("โปรดเลือกวันที่ที่ไม่ชนกับวันอื่น")
+          // setError("โปรดเลือกวันที่ที่ไม่ชนกับวันอื่น")
           formRef.current?.resetFields(["dateSelect"])
         }
       }
@@ -70,122 +44,99 @@ export default function Step3({ formRef, form }: any) {
     }
   }
 
-  const disabledDate: RangePickerProps["disabledDate"] = (current) => {
-    if (current && current < dayjs().startOf("day")) return true
-
-    const dateString = current && current.format("YYYY-MM-DD")
-    return disableDates.includes(dateString)
-  }
-
-  function ckeckbox(e: CheckboxChangeEvent, text: any) {
-    form.setFieldsValue({
-      [text]: e.target.checked,
-    })
-  }
-
-  function afterSelect() {
-    if (dateSelected.length == 0) return <></>
-    let count = 0
-    const result = dateSelected.map((date, i) => {
-      let el = (
-        <Space direction="vertical" key={i}>
-          <Divider orientation="left">
-            {date} วันที่ ({i + 1})
-          </Divider>
-          <Space direction="horizontal" align="start">
-            <Button type="text">09.00 - 12.00</Button>
-            <CModal2 textButton="เลือกวิชา" sujectindex={count} form={form} />
-            <Form.Item
-              name={`suject${count}`}
-              wrapperCol={{ span: 24 }}
-              rules={[{ required: true, message: "โปรดเลือกวิชา" }]}
-            >
-              <Input disabled />
-            </Form.Item>
-          </Space>
-          <Space direction="horizontal" align="start">
-            <Button type="text">13.00 - 16.00</Button>
-            <CModal2
-              textButton="เลือกวิชา"
-              sujectindex={count + 1}
-              form={form}
-            />
-            <Form.Item
-              name={`suject${count + 1}`}
-              wrapperCol={{ span: 24 }}
-              rules={[{ required: true, message: "โปรดเลือกวิชา" }]}
-            >
-              <Input disabled />
-            </Form.Item>
-          </Space>
-          <Form.Item name={`checkbox${i}`} valuePropName="checked" noStyle>
-            <Checkbox
-              name={`checkbox${i}`}
-              key={i}
-              onChange={(e) => ckeckbox(e, `checkbox${i}`)}
-            >
-              กิจกรรมช่วงค่ำ
-            </Checkbox>
-          </Form.Item>
-        </Space>
+  function loopSuject() {
+    let endTime = true // false in 3 5
+    let disable1Day = true
+    let element = []
+    // เลือกคอร์ส 2 เท่านั่น
+    if (timeSlot == 2) {
+      return (
+        <CModal
+          dayString={dateSelected[0]}
+          date={`date${1}`}
+          disableCheckbox={true}
+          disable1Day={false}
+          ckey={1}
+        />
       )
-      count += 2
-      // เซท default สำหรับ checkbox
-      form.setFieldsValue({
-        [`checkbox${i}`]: false,
-      })
-      return el
-    })
-    // const arrInput = document.querySelectorAll('input[id="suject0"]')
-    // console.log(arrInput)
-    return result
+    } else if (timeSlot >= 3 && timeSlot <= 4) {
+      //เลือกคอร์ส 3 - 4
+      console.log("คอรส์ " + timeSlot)
+      for (let i = 0; i < day; i++) {
+        if (i + 2 == timeSlot) {
+          endTime = false
+          if (i + 3 == timeSlot) {
+            disable1Day = false
+          }
+        }
+        element.push(
+          <CModal
+            dayString={dateSelected[i]}
+            date={`date${i}`}
+            disableCheckbox={endTime}
+            disable1Day={disable1Day}
+            ckey={i}
+            key={i}
+          />
+        )
+      }
+    } else if (timeSlot == 5) {
+      //เลือกคอร์ส 5
+      console.log("คอรส์ " + timeSlot)
+      for (let i = 0; i < day; i++) {
+        if (i + 3 == timeSlot) {
+          endTime = false
+          if (i + 4 == timeSlot) {
+            disable1Day = false
+          }
+        }
+        element.push(
+          <CModal
+            dayString={dateSelected[i]}
+            date={`date${i}`}
+            disableCheckbox={endTime}
+            disable1Day={disable1Day}
+            ckey={i}
+            key={i}
+          />
+        )
+      }
+    } else if (timeSlot == 6) {
+      //เลือกคอร์ส 6
+      console.log("คอรส์ " + timeSlot)
+      for (let i = 0; i < day; i++) {
+        if (i + 4 == timeSlot) {
+          disable1Day = false
+        }
+        element.push(
+          <CModal
+            dayString={dateSelected[i]}
+            date={`date${i}`}
+            disableCheckbox={endTime}
+            disable1Day={disable1Day}
+            ckey={i}
+            key={i}
+          />
+        )
+      }
+    }
+    return element
   }
-
-  useEffect(() => {
-    fetchCourse()
-    formRef.current?.resetFields(["dateSelect"])
-    dateSelected = []
-  }, [])
 
   return (
     <>
-      <div style={{ textAlign: "left", paddingBottom: "48px" }}>
-        <h1 style={{ textAlign: "center" }}>Step3</h1>
-        <Row gutter={[16, 16]} justify="space-evenly">
-          <Col span={20}>
-            <Card title={<>{}</>} bordered={false}>
-              <Space direction="vertical" style={{ width: "100%" }}>
-                {error && (
-                  <Alert
-                    message="โปรดเลือกวันที่ที่ไม่ชนกับวันอื่น"
-                    type="error"
-                  />
-                )}
-                <Form.Item
-                  label="เลือกวันที่"
-                  name="dateSelect"
-                  rules={[{ required: true, message: "โปรดเลือกวันที่" }]}
-                  wrapperCol={{ span: 12 }}
-                  labelCol={{ span: 8 }}
-                  initialValue={
-                    booking?.dateSelect[0]
-                      ? dayjs(booking?.dateSelect[0], dateFormat)
-                      : ""
-                  }
-                >
-                  <DatePicker
-                    disabledDate={disabledDate}
-                    onChange={changeDate}
-                    locale={locale}
-                    allowClear
-                  />
-                </Form.Item>
-              </Space>
-              {booking?.dateSelect[0] ? afterSelect() : ""}
-            </Card>
-          </Col>
-        </Row>
-      </div>
+      <div style={{ marginTop: "24px" }} />
+      <Form.Item
+        name={"dateSelect"}
+        label="เลือกวันที่"
+        rules={[{ required: true, message: "โปรดเลือกวันที่" }]}
+        labelCol={{ span: 10 }}
+        wrapperCol={{ span: 6 }}
+      >
+        <DatePicker locale={locale} onChange={changeDate} />
+      </Form.Item>
+
+      {booking.dateSelect.length != 0 && loopSuject()}
     </>
   )
 }
