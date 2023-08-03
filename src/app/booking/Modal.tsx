@@ -20,8 +20,8 @@ type Props = {
   ckey: number
 }
 
-const testSuject = "ฟิสิกส์"
-// const testSuject = ""
+// const testSuject = "ฟิสิกส์"
+const testSuject = ""
 
 function CModal({
   dayString,
@@ -59,7 +59,13 @@ function CModal({
         <Input bordered={false} />
       </Form.Item>
 
-      <Form.Item name={[`${date}`]} label="09.00 - 12.00">
+      <Form.Item
+        name={[`${date}`]}
+        label="09.00 - 12.00"
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 8 }}
+        style={{ marginBottom: 0 }}
+      >
         <Space direction="horizontal" align="start">
           <Button type="primary" onClick={showModal}>
             เลือกวิชา
@@ -76,7 +82,13 @@ function CModal({
 
       {disableCheckbox && (
         <>
-          <Form.Item name={[`${date}`]} label="13.00 - 16.00">
+          <Form.Item
+            name={[`${date}`]}
+            label="13.00 - 16.00"
+            labelCol={{ span: 6 }}
+            wrapperCol={{ span: 8 }}
+            style={{ marginBottom: 0 }}
+          >
             <Space direction="horizontal" align="start">
               <Button type="primary" onClick={showModal}>
                 เลือกวิชา
@@ -97,6 +109,8 @@ function CModal({
               name={[`${date}`, `activity`]}
               valuePropName="checked"
               initialValue={false}
+              labelCol={{ span: 6 }}
+              wrapperCol={{ span: 1 }}
             >
               <Checkbox />
             </Form.Item>
