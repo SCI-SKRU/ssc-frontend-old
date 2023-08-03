@@ -9,6 +9,7 @@ import {
   Modal,
   Space,
 } from "antd"
+import { convertToThaiDate } from "@/utils/thaiDateUtils"
 
 type Props = {
   // mainsubject: number
@@ -48,7 +49,7 @@ function CModal({
 
   return (
     <>
-      <Divider orientation="left">วันที่ {dayString}</Divider>
+      <Divider orientation="left">{convertToThaiDate(dayString)}</Divider>
 
       <Form.Item
         name={[`${date}`, "day"]}
