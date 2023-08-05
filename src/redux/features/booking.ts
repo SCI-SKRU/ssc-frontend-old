@@ -4,6 +4,19 @@ type InitialState = {
   value: BookingState
 }
 
+type SubjectDate = {
+  day?: string
+  subject: {
+    subsubject: string
+    mainsubject: string
+  }
+  activity?: boolean
+}
+
+type SubjectDetails = {
+  [key: string]: SubjectDate | undefined
+}
+
 type BookingState = {
   schoolname: string
   schoolsize: string
@@ -16,6 +29,8 @@ type BookingState = {
   countclassroom: string
   cours: number
   dateSelect: string[]
+  coupon: string
+  subject_details: SubjectDetails | null
 }
 
 const initialState = {
@@ -31,6 +46,8 @@ const initialState = {
     countclassroom: "",
     cours: 0,
     dateSelect: [],
+    coupon: "",
+    subject_details: null,
   } as BookingState,
 } as InitialState
 

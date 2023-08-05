@@ -4,6 +4,7 @@ import { Form, DatePicker, DatePickerProps } from "antd"
 
 import CModal from "./Modal"
 
+import type { FormInstance } from "antd"
 import { AppDispatch, useAppSelector } from "@/redux/store"
 import { useDispatch } from "react-redux"
 import { saveData } from "@/redux/features/booking"
@@ -15,7 +16,12 @@ let dateSelected: any = []
 let day = 0
 let disableDates: any[] = []
 
-export default function Step3({ formRef, form }: any) {
+type Props = {
+  formRef: any
+  form: FormInstance
+}
+
+export default function Step3({ formRef, form }: Props) {
   const booking = useAppSelector((state) => state.bookingReducer.value)
   const distpatch = useDispatch<AppDispatch>()
 
@@ -55,11 +61,12 @@ export default function Step3({ formRef, form }: any) {
     if (timeSlot == 2) {
       return (
         <CModal
+          form={form}
           dayString={dateSelected[0]}
-          date={`date${1}`}
+          date={`date${0}`}
           disableCheckbox={true}
           disable1Day={false}
-          ckey={1}
+          index={0}
         />
       )
     } else if (timeSlot >= 3 && timeSlot <= 4) {
@@ -73,11 +80,12 @@ export default function Step3({ formRef, form }: any) {
         }
         element.push(
           <CModal
+            form={form}
             dayString={dateSelected[i]}
             date={`date${i}`}
             disableCheckbox={endTime}
             disable1Day={disable1Day}
-            ckey={i}
+            index={i}
             key={i}
           />
         )
@@ -93,11 +101,12 @@ export default function Step3({ formRef, form }: any) {
         }
         element.push(
           <CModal
+            form={form}
             dayString={dateSelected[i]}
             date={`date${i}`}
             disableCheckbox={endTime}
             disable1Day={disable1Day}
-            ckey={i}
+            index={i}
             key={i}
           />
         )
@@ -110,11 +119,12 @@ export default function Step3({ formRef, form }: any) {
         }
         element.push(
           <CModal
+            form={form}
             dayString={dateSelected[i]}
             date={`date${i}`}
             disableCheckbox={endTime}
             disable1Day={disable1Day}
-            ckey={i}
+            index={i}
             key={i}
           />
         )
@@ -143,7 +153,6 @@ export default function Step3({ formRef, form }: any) {
       >
         <DatePicker locale={locale} onChange={changeDate} />
       </Form.Item>
-      {console.log(booking.dateSelect[0])}
       {booking.dateSelect[0] ? loopSuject() : ""}
     </>
   )

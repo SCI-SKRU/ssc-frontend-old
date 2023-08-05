@@ -15,12 +15,14 @@ import { useState } from "react"
 import Step1 from "./step1"
 import Step2 from "./step2"
 import Step3 from "./step3"
+import Step4 from "./step4"
 import Result from "./result"
 
 import { saveData, showData } from "@/redux/features/booking"
 import { useDispatch } from "react-redux"
 import { AppDispatch, useAppSelector } from "@/redux/store"
 import React from "react"
+import dayjs from "dayjs"
 
 export default function Booking() {
   const { token } = theme.useToken()
@@ -43,6 +45,10 @@ export default function Booking() {
       content: <Step3 formRef={formRef} form={form} />,
     },
     {
+      title: "Step 4",
+      content: <Step4 />,
+    },
+    {
       title: "Result",
       content: <Result form={form} />,
     },
@@ -51,7 +57,7 @@ export default function Booking() {
   const distpatch = useDispatch<AppDispatch>()
 
   const next = (values: any) => {
-    console.log(booking)
+    console.log(values)
     // step3
     if (values.dateSelect) {
       let date = values.dateSelect
@@ -64,7 +70,9 @@ export default function Booking() {
         const nextDate = date.clone().add(i, "days").format("YYYY-MM-DD")
         dateSelected.push(nextDate)
       }
+      values.dateSelect = dayjs(values.dateSelect).format("YYYY-MM-DD")
       distpatch(saveData({ dateSelect: dateSelected }))
+      distpatch(saveData({ subject_details: [values][0] }))
     } else {
       distpatch(saveData(values))
     }
@@ -113,7 +121,7 @@ export default function Booking() {
               )}
               {current < steps.length - 1 && (
                 <Button type="primary" htmlType="submit">
-                  ต่อไป
+                  {current == 4 - 1 ? "สรุปรวม" : "ต่อไป"}
                 </Button>
               )}
               {current === steps.length - 1 && (
