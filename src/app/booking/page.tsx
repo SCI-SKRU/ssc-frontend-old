@@ -10,7 +10,7 @@ import {
   Form,
   FormInstance,
 } from "antd"
-import { useState } from "react"
+import { useRef, useState } from "react"
 // import components step
 import Step1 from "./step1"
 import Step2 from "./step2"
@@ -30,31 +30,42 @@ export default function Booking() {
   const booking = useAppSelector((state) => state.bookingReducer.value)
   const [form] = Form.useForm()
   const formRef = React.useRef<FormInstance>(null)
+  const distpatch = useDispatch<AppDispatch>()
+  const refSubSubject = useRef<HTMLDivElement>(null)
 
   const steps = [
     {
-      title: "Step 1",
+      title: "รายละเอียดพื้นฐาน",
       content: <Step1 form={form} />,
     },
     {
-      title: "Step 2",
+      title: "เลือกคอร์ส",
       content: <Step2 />,
     },
     {
-      title: "Step 3",
+      title: "เลือกตารางเวลา/วิชา",
       content: <Step3 formRef={formRef} form={form} />,
     },
     {
-      title: "Step 4",
+      title: "คูปอง",
       content: <Step4 />,
     },
     {
-      title: "Result",
+      title: "สรุป",
       content: <Result form={form} />,
     },
   ]
 
-  const distpatch = useDispatch<AppDispatch>()
+  const scrollToTop = () => {
+    setTimeout(() => {
+      if (refSubSubject.current) {
+        refSubSubject.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        })
+      }
+    }, 200)
+  }
 
   const next = (values: any) => {
     console.log(values)
@@ -77,27 +88,30 @@ export default function Booking() {
       distpatch(saveData(values))
     }
     setCurrent(current + 1)
+    scrollToTop()
   }
 
   const prev = () => {
     setCurrent(current - 1)
+    scrollToTop()
   }
+
   const items = steps.map((item) => ({ key: item.title, title: item.title }))
 
   const contentStyle: React.CSSProperties = {
     minHeight: "600px",
     textAlign: "center",
     color: token.colorTextTertiary,
-    backgroundColor: token.colorFillAlter,
+    // backgroundColor: token.colorFillAlter,
     borderRadius: token.borderRadiusLG,
-    border: `1px dashed ${token.colorBorder}`,
+    // border: `1px dashed ${token.colorBorder}`,
     marginTop: 16,
   }
 
   return (
     <>
       <Row>
-        <Col span={12} offset={6}>
+        <Col span={24} offset={0} lg={{ span: 12, offset: 6 }}>
           <Steps current={current} items={items} />
           <Form
             ref={formRef}
@@ -106,7 +120,9 @@ export default function Booking() {
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 12 }}
           >
-            <div style={contentStyle}>{steps[current].content}</div>
+            <div style={contentStyle} ref={refSubSubject}>
+              {steps[current].content}
+            </div>
             <div
               style={{
                 marginTop: 24,

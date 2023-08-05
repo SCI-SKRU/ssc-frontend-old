@@ -5,6 +5,7 @@ import { Form, DatePicker, DatePickerProps } from "antd"
 import CModal from "./Modal"
 
 import type { FormInstance } from "antd"
+import type { RangePickerProps } from "antd/es/date-picker"
 import { AppDispatch, useAppSelector } from "@/redux/store"
 import { useDispatch } from "react-redux"
 import { saveData } from "@/redux/features/booking"
@@ -31,6 +32,13 @@ export default function Step3({ formRef, form }: Props) {
     day = 2
   } else if (timeSlot == 5 || timeSlot == 6) {
     day = 3
+  }
+
+  const disabledDate: RangePickerProps["disabledDate"] = (current) => {
+    const today = dayjs().startOf("day")
+    // ปิดการใช้งานเดือนที่ 4 นับจากเดือนนี้
+    const fourthMonthStart = today.add(3, "month").startOf("month")
+    return current && (current < today || current > fourthMonthStart)
   }
 
   const changeDate: DatePickerProps["onChange"] = (date, dateString) => {
@@ -146,12 +154,16 @@ export default function Step3({ formRef, form }: Props) {
         label="เลือกวันที่"
         rules={[{ required: true, message: "โปรดเลือกวันที่" }]}
         labelCol={{ span: 10 }}
-        wrapperCol={{ span: 6 }}
+        wrapperCol={{ span: 4 }}
         initialValue={
           booking.dateSelect[0] ? dayjs(booking.dateSelect[0]) : undefined
         }
       >
-        <DatePicker locale={locale} onChange={changeDate} />
+        <DatePicker
+          locale={locale}
+          onChange={changeDate}
+          disabledDate={disabledDate}
+        />
       </Form.Item>
       {booking.dateSelect[0] ? loopSuject() : ""}
     </>

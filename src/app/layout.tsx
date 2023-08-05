@@ -1,6 +1,11 @@
+"use client"
 import React from "react"
 import { Sarabun } from "next/font/google"
 import StyledComponentsRegistry from "../lib/AntdRegistry"
+import { Layout, ConfigProvider } from "antd"
+import theme from "../theme/themeConfig"
+
+const { Header, Content, Footer } = Layout
 
 const sarabun = Sarabun({
   subsets: ["thai"],
@@ -14,8 +19,18 @@ export const metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html lang="en">
-    <body className={sarabun.className}>
-      <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+    <body className={sarabun.className} style={{ margin: 0 }}>
+      <StyledComponentsRegistry>
+        <ConfigProvider theme={theme}>
+          <Layout>
+            <Header>header</Header>
+            <Layout>
+              <Content style={{ margin: "24px 16px 0" }}>{children}</Content>
+            </Layout>
+            <Footer>footer</Footer>
+          </Layout>
+        </ConfigProvider>
+      </StyledComponentsRegistry>
     </body>
   </html>
 )

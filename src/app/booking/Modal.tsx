@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import {
   Button,
   Checkbox,
@@ -39,6 +39,8 @@ function CModal({
   const [isMainSub, setIsMainSub] = useState<number>(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
+  const refSubSubject = useRef<HTMLDivElement>(null)
+
   const showModal = (e: any, isMainSub: number) => {
     setIsMainSub(isMainSub)
     setIsModalOpen(true)
@@ -78,6 +80,14 @@ function CModal({
   }
 
   const mainRadioOnchange = (e: RadioChangeEvent) => {
+    setTimeout(() => {
+      if (refSubSubject.current) {
+        refSubSubject.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        })
+      }
+    }, 200)
     setTitleMainSubject(String(e.target.title))
     setMainSubjectSelected(e.target.value)
   }
@@ -113,7 +123,6 @@ function CModal({
     <>
       <div>
         <Divider orientation="left">{convertToThaiDate(dayString)}</Divider>
-        {/* <Divider orientation="left">วันที่ {dayString}</Divider> */}
 
         <Form.Item
           name={[`${date}`, "day"]}
@@ -183,7 +192,7 @@ function CModal({
       )}
 
       <Modal
-        title="Basic Modal"
+        title="เลือกวิชา"
         open={isModalOpen}
         onOk={(e) => handleOk(e)}
         onCancel={handleCancel}
@@ -191,7 +200,7 @@ function CModal({
         key={index}
       >
         <Row>
-          <Col span={12} style={{ backgroundColor: "#c2d9ff" }}>
+          <Col span={24} lg={{ span: 12 }}>
             <Divider orientation="left" style={{ fontWeight: "bold" }}>
               เลือกวิชาหลัก
             </Divider>
@@ -213,12 +222,14 @@ function CModal({
               </Space>
             </Radio.Group>
           </Col>
-          <Col span={12} style={{ backgroundColor: "#c2ffca" }}>
+          <Col span={24} lg={{ span: 12 }}>
             {mainSubjectSelected && (
               <>
-                <Divider orientation="left" style={{ fontWeight: "bold" }}>
-                  เลือกวิชาย่อย
-                </Divider>
+                <div ref={refSubSubject}>
+                  <Divider orientation="left" style={{ fontWeight: "bold" }}>
+                    เลือกวิชาย่อย
+                  </Divider>
+                </div>
                 <Radio.Group
                   value={subSubjectSelected}
                   onChange={subRadioOnchange}

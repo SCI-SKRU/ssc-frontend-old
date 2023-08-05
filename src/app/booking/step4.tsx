@@ -1,22 +1,31 @@
-import React from "react"
+import React, { useState } from "react"
 import { Button, Divider, Form, Input, Space } from "antd"
 
 type Props = {}
 
 export default function Step4({}: Props) {
+  const [codeCoupon, setCodeCoupon] = useState("")
   return (
     <>
       <Divider>ใช้คูปอง</Divider>
-      <Space direction="horizontal" align="start" style={{ marginTop: "24px" }}>
+      <Space direction="vertical" align="start" style={{ marginTop: "24px" }}>
         <Form.Item
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 24 }}
+          labelCol={{ span: 10 }}
+          wrapperCol={{ span: 18 }}
           name="coupon"
           label="รหัสคูปอง"
         >
-          <Input placeholder="กรอกคูปอง" />
+          <Input
+            placeholder="กรอกคูปอง"
+            onChange={(e) => setCodeCoupon(() => e.target.value)}
+          />
         </Form.Item>
-        <Button>ใช้คูปอง</Button>
+        <Button
+          onClick={() => console.log(codeCoupon)}
+          disabled={codeCoupon ? false : true}
+        >
+          ใช้คูปอง
+        </Button>
       </Space>
     </>
   )
