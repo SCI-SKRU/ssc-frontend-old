@@ -182,8 +182,8 @@ function CModal({
               name={[`${date}`, `activity`]}
               valuePropName="checked"
               initialValue={false}
-              labelCol={{ span: 6 }}
-              wrapperCol={{ span: 1 }}
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 12 }}
             >
               <Checkbox />
             </Form.Item>
@@ -230,33 +230,32 @@ function CModal({
                     เลือกวิชาย่อย
                   </Divider>
                 </div>
+                <p style={{ fontWeight: "bold" }}>ประถมศึกษา (ป.1 - ป.6)</p>
                 <Radio.Group
                   value={subSubjectSelected}
                   onChange={subRadioOnchange}
                 >
-                  <Space direction="vertical">
-                    {subjectAll
-                      .find((subject) => subject.id === mainSubjectSelected)
-                      ?.level.map((item, i) => (
-                        <Space direction="vertical" key={i}>
-                          {item.first.map((item, i) => (
-                            <Radio value={item.code} key={`first${i}`}>
-                              {item.msg}
-                            </Radio>
-                          ))}
-                          {item.second.map((item, i) => (
-                            <Radio value={item.code} key={`second${i}`}>
-                              {item.msg}
-                            </Radio>
-                          ))}
-                          {item.third.map((item, i) => (
-                            <Radio value={item.code} key={`third${i}`}>
-                              {item.msg}
-                            </Radio>
-                          ))}
-                        </Space>
-                      ))}
-                  </Space>
+                  {subjectAll
+                    .find((subject) => subject.id === mainSubjectSelected)
+                    ?.level.map((item, i) => (
+                      <Space direction="vertical" key={i}>
+                        {item.first.map((item, i) => (
+                          <Radio value={item.code} key={`first${i}`}>
+                            {item.msg}
+                          </Radio>
+                        ))}
+                        {item.second.map((item, i) => (
+                          <Radio value={item.code} key={`second${i}`}>
+                            {item.msg}
+                          </Radio>
+                        ))}
+                        {item.third.map((item, i) => (
+                          <Radio value={item.code} key={`third${i}`}>
+                            {item.msg}
+                          </Radio>
+                        ))}
+                      </Space>
+                    ))}
                 </Radio.Group>
               </>
             )}

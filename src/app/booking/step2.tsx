@@ -2,7 +2,7 @@ import { Button, Form, Radio } from "antd"
 import type { CheckboxOptionType } from "antd"
 import React, { useEffect, useState } from "react"
 import { AppDispatch, useAppSelector } from "@/redux/store"
-import { getDataCourse } from "./api/routes"
+import { getDataCourse } from "./api/route"
 import { saveData } from "@/redux/features/booking"
 import { useDispatch } from "react-redux"
 
@@ -28,7 +28,7 @@ export default function Step2() {
   return (
     <>
       <div style={{ textAlign: "left" }}>
-        <h1 style={{ textAlign: "center" }}>Step2</h1>
+        <h1 style={{ textAlign: "center" }}>เลือกคอร์ส</h1>
         <Form.Item
           wrapperCol={{ span: 24 }}
           style={{ paddingLeft: 24 }}

@@ -1,14 +1,12 @@
 import React from "react"
-import { Button, ConfigProvider } from "antd"
+import { ConfigProvider } from "antd"
 import theme from "../theme/themeConfig"
-import Link from "next/link"
+import CCalendar from "@/components/Calendar"
 
 const HomePage = () => (
   <ConfigProvider theme={theme}>
     <div className="App">
-      <Link href={"/booking"}>
-        <Button type="primary">Booking</Button>
-      </Link>
+      <CCalendar />
     </div>
   </ConfigProvider>
 )

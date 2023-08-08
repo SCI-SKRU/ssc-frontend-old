@@ -43,7 +43,7 @@ export const optionsCours: Optionz[] = [
   },
 ]
 
-export function getValue(): Promise<Optionz[]> {
+export function getValueProvince(): Promise<Optionz[]> {
   return fetch(
     "https://raw.githubusercontent.com/kongvut/thai-province-data/master/api_province_with_amphure_tambon.json"
   )

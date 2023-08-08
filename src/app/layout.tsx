@@ -2,8 +2,9 @@
 import React from "react"
 import { Sarabun } from "next/font/google"
 import StyledComponentsRegistry from "../lib/AntdRegistry"
-import { Layout, ConfigProvider } from "antd"
+import { Layout, ConfigProvider, Button, Space } from "antd"
 import theme from "../theme/themeConfig"
+import Link from "next/link"
 
 const { Header, Content, Footer } = Layout
 
@@ -23,7 +24,16 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
       <StyledComponentsRegistry>
         <ConfigProvider theme={theme}>
           <Layout>
-            <Header>header</Header>
+            <Header>
+              <Space>
+                <Link href={"/"}>
+                  <Button type="primary">หน้าหลัก</Button>
+                </Link>
+                <Link href={"/booking"}>
+                  <Button type="primary">จองคอร์ส</Button>
+                </Link>
+              </Space>
+            </Header>
             <Layout>
               <Content style={{ margin: "24px 16px 0" }}>{children}</Content>
             </Layout>

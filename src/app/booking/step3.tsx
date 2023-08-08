@@ -149,6 +149,7 @@ export default function Step3({ formRef, form }: Props) {
   return (
     <>
       <div style={{ marginTop: "24px" }} />
+      <h1 style={{ textAlign: "center" }}>เลือกคอร์ส</h1>
       <Form.Item
         name={"dateSelect"}
         label="เลือกวันที่"

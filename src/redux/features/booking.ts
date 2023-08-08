@@ -1,44 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import type {
+  BookingState,
+  InitialState,
+  SubjectDate,
+  SubjectDetails,
+} from "@/types/booking"
 
-type InitialState = {
-  value: BookingState
-}
-
-type SubjectDate = {
-  day?: string
-  subject: {
-    subsubject: string
-    mainsubject: string
-  }
-  activity?: boolean
-}
-
-type SubjectDetails = {
-  [key: string]: SubjectDate | undefined
-}
-
-type BookingState = {
-  schoolname: string
-  schoolsize: string
-  subaddress: string[]
-  countconnect: number
-  operator: string
-  position: string
-  email: string
-  mobile: string
-  countclassroom: string
-  cours: number
-  dateSelect: string[]
-  coupon: string
-  subject_details: SubjectDetails | null
-}
-
-const initialState = {
+export const initialState = {
   value: {
     schoolname: "",
     schoolsize: "",
     subaddress: [],
-    countconnect: 0,
     operator: "",
     position: "",
     email: "",

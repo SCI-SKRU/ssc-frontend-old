@@ -7,7 +7,7 @@ export default function Step4({}: Props) {
   const [codeCoupon, setCodeCoupon] = useState("")
   return (
     <>
-      <Divider>ใช้คูปอง</Divider>
+      <h1 style={{ textAlign: "center" }}>คูปอง</h1>
       <Space direction="vertical" align="start" style={{ marginTop: "24px" }}>
         <Form.Item
           labelCol={{ span: 10 }}

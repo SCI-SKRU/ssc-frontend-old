@@ -1,37 +1,24 @@
-import {
-  Form,
-  Input,
-  Select,
-  Cascader,
-  InputNumber,
-  Radio,
-  Space,
-  Button,
-} from "antd"
+import { Form, Input, Select, Cascader, Radio, Space, Button } from "antd"
 import React, { useEffect, useState } from "react"
 import { useAppSelector } from "@/redux/store"
 
 // path now
-import { schoolsize, getValue, Optionz } from "./value"
+import { schoolsize, Optionz } from "./value"
+import { getProvince } from "./api/route"
+import { CascaderOption } from "@/types/cascader"
 
 const { Option } = Select
-
-const layout = {
-  labelCol: { span: 12, xs: 14, lg: 14, xl: 12 },
-  wrapperCol: { span: 12 },
-}
 
 // for dev step1 required ?
 const required: boolean = true
 
 export default function Step1({ form }: any) {
-  const [options, setOptions] = useState<Optionz[]>([])
+  const [options, setOptions] = useState<CascaderOption[]>([])
 
   const selected = useAppSelector((state) => state.bookingReducer.value)
-  const countConnect = 1 // default 1
 
   async function getOptions() {
-    const result = await getValue()
+    const result = await getProvince()
     setOptions(result)
   }
 
@@ -40,7 +27,6 @@ export default function Step1({ form }: any) {
       schoolname: "สังคมอิสลาม",
       schoolsize: "ขนาดกลาง",
       subaddress: ["a1", "b2", "c3"],
-      countconnect: 1,
       operator: "ผมเอง",
       position: "ครู",
       email: "radis@gmail.com",
@@ -56,7 +42,7 @@ export default function Step1({ form }: any) {
   return (
     <>
       <div style={{ textAlign: "left" }}>
-        <h1 style={{ textAlign: "center" }}>Step1</h1>
+        <h1 style={{ textAlign: "center" }}>รายละเอียดพื้นฐาน</h1>
         <Form.Item
           label="ชื่อโรงเรียน"
           name="schoolname"
@@ -95,10 +81,6 @@ export default function Step1({ form }: any) {
             options={options}
             placeholder="จังหวัด/อำเภอ/ตำบล"
           />
-        </Form.Item>
-
-        <Form.Item name="countconnect" label="เข้าร่วมครั้งที่">
-          <InputNumber value={countConnect} disabled />
         </Form.Item>
 
         <Form.Item
