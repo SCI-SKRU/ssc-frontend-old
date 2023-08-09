@@ -21,7 +21,7 @@ const disSchoolSize = [
   { size: "ขนาดใหญ่พิเศษ", value: 25, unit: "%" },
 ]
 
-export default function Result({ form }: any) {
+export default function Result() {
   const booking = useAppSelector((state) => state.bookingReducer.value)
   const booking_subject_details = booking.subject_details
   // console.log(booking)

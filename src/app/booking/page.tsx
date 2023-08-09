@@ -52,7 +52,7 @@ export default function Booking() {
     },
     {
       title: "สรุป",
-      content: <Result form={form} />,
+      content: <Result />,
     },
   ]
 
@@ -143,7 +143,10 @@ export default function Booking() {
               {current === steps.length - 1 && (
                 <Button
                   type="primary"
-                  onClick={() => message.success("Processing complete!")}
+                  onClick={() => {
+                    message.success("Processing complete!")
+                    console.log(booking)
+                  }}
                 >
                   ยืนยัน
                 </Button>

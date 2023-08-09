@@ -184,8 +184,8 @@ function CModal({
               name={[`${date}`, `activity`]}
               valuePropName="checked"
               initialValue={false}
-              labelCol={{ span: 24 }}
-              wrapperCol={{ span: 12 }}
+              labelCol={{ span: 6 }}
+              wrapperCol={{ span: 1 }}
             >
               <Checkbox />
             </Form.Item>
