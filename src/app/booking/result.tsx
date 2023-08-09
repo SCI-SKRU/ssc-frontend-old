@@ -200,25 +200,6 @@ export default function Result() {
                   <p>ค่าดำเนินการ</p>
                   <p>{sumOperationFee()}</p>
                 </div>
-                {findPriceCoupon(booking.coupon) != 0 && (
-                  <>
-                    <div style={styleFlexBetween}>
-                      <p>คูปอง</p>
-                      <p style={{ color: "red" }}> -{sumDisCoupon()}</p>
-                    </div>
-                  </>
-                )}
-
-                <div style={styleFlexBetween}>
-                  <p>ส่วนลดโรงเรียนขนาดเล็ก (-10%)</p>
-                  <p style={{ color: "red" }}> -{sumDisSchoolSize()}</p>
-                </div>
-                {countJoin === 1 && (
-                  <div style={styleFlexBetween}>
-                    <p>ส่วนลดการเข้าร่วมกิจกรรมครั้งแรก (-5%)</p>
-                    <p style={{ color: "red" }}> -{sunDisFirstJoin()}</p>
-                  </div>
-                )}
                 <hr />
                 <div style={styleFlexBetween}>
                   <p style={{ fontSize: "1.5rem" }}>รวม</p>
@@ -231,7 +212,6 @@ export default function Result() {
           </Card>
         </Col>
       </Row>
-      <Button onClick={() => console.log(sumPrice)}>Chewck</Button>
     </>
   )
 }
