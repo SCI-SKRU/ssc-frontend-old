@@ -4,13 +4,33 @@ import { useAppSelector } from "@/redux/store"
 
 // path now
 import { schoolsize, Optionz } from "./value"
-import { getProvince } from "./api/route"
 import { CascaderOption } from "@/types/cascader"
+import api_province from "./api/api_province_with_amphure_tambon.json"
 
 const { Option } = Select
 
 // for dev step1 required ?
 const required: boolean = true
+
+function getProvince(): CascaderOption[] {
+  return api_province.map((data: any, index: any) => ({
+    label: data.name_th,
+    value: data.name_en,
+    children: data.amphure.map((item: any) => {
+      return {
+        label: item.name_th,
+        value: item.name_en,
+        children: item.tambon.map((item2: any) => {
+          return {
+            label: item2.name_th,
+            value: item2.name_en,
+          }
+        }),
+      }
+    }),
+
+  }))
+}
 
 export default function Step1({ form }: any) {
   const [options, setOptions] = useState<CascaderOption[]>([])
