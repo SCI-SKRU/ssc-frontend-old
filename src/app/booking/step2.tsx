@@ -2,7 +2,6 @@ import { Button, Form, Radio } from "antd"
 import type { CheckboxOptionType } from "antd"
 import React, { useEffect, useState } from "react"
 import { AppDispatch, useAppSelector } from "@/redux/store"
-import { getDataCourse } from "./api/route"
 import { saveData } from "@/redux/features/booking"
 import { useDispatch } from "react-redux"
 
@@ -12,7 +11,9 @@ export default function Step2() {
   const distpatch = useDispatch<AppDispatch>()
 
   async function fetchCourse() {
-    const result = await getDataCourse()
+    const endpoint = `${process.env.NEXT_PUBLIC_BASE_API_URL}/courses` || 'http://localhost:3000/api/v1/courses'
+    const response = await fetch(endpoint)
+    const result = await response.json()
     const transformedCourses = result.courses.map((course: any) => ({
       label: `${course.name} ${course.description}`,
       value: course.timeSlot,
