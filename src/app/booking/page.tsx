@@ -46,10 +46,10 @@ export default function Booking() {
       title: "เลือกตารางเวลา/วิชา",
       content: <Step3 formRef={formRef} form={form} />,
     },
-    {
-      title: "คูปอง",
-      content: <Step4 />,
-    },
+    // {
+    //   title: "คูปอง",
+    //   content: <Step4 />,
+    // },
     {
       title: "สรุป",
       content: <Result />,

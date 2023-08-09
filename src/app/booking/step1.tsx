@@ -125,7 +125,7 @@ export default function Step1({ form }: any) {
             </Space>
           </Radio.Group>
         </Form.Item>
-        <Button onClick={onFill}>Auto Fill</Button>
+        {/* <Button onClick={onFill}>Auto Fill</Button> */}
       </div>
     </>
   )
