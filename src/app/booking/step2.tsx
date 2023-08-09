@@ -11,7 +11,7 @@ export default function Step2() {
   const distpatch = useDispatch<AppDispatch>()
 
   async function fetchCourse() {
-    const endpoint = `${process.env.NEXT_PUBLIC_BASE_API_URL}/courses` || 'http://localhost:3000/api/v1/courses'
+    const endpoint = `${process.env.NEXT_PUBLIC_BASE_API_URL}/courses` || 'https://bit.ly/47mjNk1'
     const response = await fetch(endpoint)
     const result = await response.json()
     const transformedCourses = result.courses.map((course: any) => ({
