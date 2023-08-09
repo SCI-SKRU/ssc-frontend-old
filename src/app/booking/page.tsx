@@ -68,7 +68,7 @@ export default function Booking() {
   }
 
   const next = (values: any) => {
-    console.log(values)
+    // console.log(values)
     // step3
     if (values.dateSelect) {
       let date = values.dateSelect

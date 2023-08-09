@@ -24,13 +24,13 @@ export default function Step1({ form }: any) {
 
   const onFill = () => {
     form.setFieldsValue({
-      schoolname: "สังคมอิสลาม",
-      schoolsize: "ขนาดกลาง",
-      subaddress: ["a1", "b2", "c3"],
-      operator: "ผมเอง",
+      schoolname: "โรงเรียนปฤษณา",
+      schoolsize: "ขนาดเล็ก",
+      subaddress: ["สงขลา", "เมืองสงขลา", "บ่อยาง"],
+      operator: "จอห์น แมว",
       position: "ครู",
       email: "radis@gmail.com",
-      mobile: "0255411588",
+      mobile: "085542225",
       countclassroom: 1,
     })
   }

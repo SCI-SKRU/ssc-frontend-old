@@ -14,6 +14,7 @@ export default function Step4({}: Props) {
           wrapperCol={{ span: 18 }}
           name="coupon"
           label="รหัสคูปอง"
+          initialValue={"SSC002"}
         >
           <Input
             placeholder="กรอกคูปอง"
