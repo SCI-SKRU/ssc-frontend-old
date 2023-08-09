@@ -2,7 +2,8 @@ import { CascaderOption } from "@/types/cascader"
 import api_province from "./api_province_with_amphure_tambon.json"
 
 export async function getDataCourse() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/courses`)
+  const endpoint = `${process.env.NEXT_PUBLIC_BASE_API_URL}/courses` || 'http://localhost:3000/api/v1/courses'
+  const res = await fetch(endpoint)
   if (!res.ok) {
     throw new Error("Failed to fetch data")
   }
