@@ -49,6 +49,7 @@ function CModal({
   const handleOk = (e: any) => {
     const notEmpty = mainSubjectSelected && subSubjectSelected
     const text = `${titleMainSubject} ${subSubjectSelected}`
+    // isMainSub เป็น 1 วิชาหลัก เป็น 2 วิชารอง
     if (isMainSub === 1 && notEmpty) {
       form.setFieldsValue({
         [`${date}`]: {
@@ -176,6 +177,7 @@ function CModal({
             </Space>
           </Form.Item>
 
+          {/* disable1Day คือ ถ้าเลือกคอส์ 1 วันจะให้ปิดกิจกรรมช่วงค่ำ */}
           {disable1Day && (
             <Form.Item
               label="กิจกรรมช่วงค่ำ"
@@ -230,7 +232,6 @@ function CModal({
                     เลือกวิชาย่อย
                   </Divider>
                 </div>
-                <p style={{ fontWeight: "bold" }}>ประถมศึกษา (ป.1 - ป.6)</p>
                 <Radio.Group
                   value={subSubjectSelected}
                   onChange={subRadioOnchange}
@@ -239,21 +240,9 @@ function CModal({
                     .find((subject) => subject.id === mainSubjectSelected)
                     ?.level.map((item, i) => (
                       <Space direction="vertical" key={i}>
-                        {item.first.map((item, i) => (
-                          <Radio value={item.code} key={`first${i}`}>
-                            {item.msg}
-                          </Radio>
-                        ))}
-                        {item.second.map((item, i) => (
-                          <Radio value={item.code} key={`second${i}`}>
-                            {item.msg}
-                          </Radio>
-                        ))}
-                        {item.third.map((item, i) => (
-                          <Radio value={item.code} key={`third${i}`}>
-                            {item.msg}
-                          </Radio>
-                        ))}
+                        <Radio value={item.code} key={`radio${i}`}>
+                          {item.name} ({item.level})
+                        </Radio>
                       </Space>
                     ))}
                 </Radio.Group>
