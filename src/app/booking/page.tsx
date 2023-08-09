@@ -11,14 +11,12 @@ import {
   FormInstance,
 } from "antd"
 import { useRef, useState } from "react"
-// import components step
 import Step1 from "./step1"
 import Step2 from "./step2"
 import Step3 from "./step3"
-import Step4 from "./step4"
 import Result from "./result"
 
-import { saveData, showData } from "@/redux/features/booking"
+import { saveData } from "@/redux/features/booking"
 import { useDispatch } from "react-redux"
 import { AppDispatch, useAppSelector } from "@/redux/store"
 import React from "react"
@@ -46,10 +44,6 @@ export default function Booking() {
       title: "เลือกตารางเวลา/วิชา",
       content: <Step3 formRef={formRef} form={form} />,
     },
-    // {
-    //   title: "คูปอง",
-    //   content: <Step4 />,
-    // },
     {
       title: "สรุป",
       content: <Result />,
@@ -68,7 +62,6 @@ export default function Booking() {
   }
 
   const next = (values: any) => {
-    // console.log(values)
     // step3
     if (values.dateSelect) {
       let date = values.dateSelect
@@ -102,17 +95,21 @@ export default function Booking() {
     minHeight: "600px",
     textAlign: "center",
     color: token.colorTextTertiary,
-    // backgroundColor: token.colorFillAlter,
     borderRadius: token.borderRadiusLG,
-    // border: `1px dashed ${token.colorBorder}`,
     marginTop: 16,
   }
 
   return (
     <>
-      <Row>
-        <Col span={24} offset={0} lg={{ span: 12, offset: 6 }}>
-          <Steps current={current} items={items} />
+      <Row justify={"center"}>
+        <Col xs={20} lg={12}>
+        <Row gutter={[16, 16]}>
+          <Col span={24}>
+            <div style={ { marginTop: '20px' } }>
+              <Steps current={current} items={items} />
+            </div>
+          </Col>
+          <Col span={24}>
           <Form
             ref={formRef}
             form={form}
@@ -153,6 +150,10 @@ export default function Booking() {
               )}
             </div>
           </Form>
+          </Col>
+
+        </Row>
+
         </Col>
       </Row>
     </>
