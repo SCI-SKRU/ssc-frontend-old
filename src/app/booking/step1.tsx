@@ -15,15 +15,15 @@ const required: boolean = true
 function getProvince(): CascaderOption[] {
   return api_province.map((data: any, index: any) => ({
     label: data.name_th,
-    value: data.name_en,
+    value: data.name_th,
     children: data.amphure.map((item: any) => {
       return {
         label: item.name_th,
-        value: item.name_en,
+        value: item.name_th,
         children: item.tambon.map((item2: any) => {
           return {
             label: item2.name_th,
-            value: item2.name_en,
+            value: item2.name_th,
           }
         }),
       }
