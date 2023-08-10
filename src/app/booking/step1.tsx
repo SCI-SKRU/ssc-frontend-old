@@ -13,22 +13,17 @@ const { Option } = Select
 const required: boolean = true
 
 function getProvince(): CascaderOption[] {
-  return api_province.map((data: any, index: any) => ({
+  return api_province.map((data: any) => ({
     label: data.name_th,
     value: data.name_th,
-    children: data.amphure.map((item: any) => {
-      return {
+    children: data.amphure.map((item: any) => ({
         label: item.name_th,
         value: item.name_th,
-        children: item.tambon.map((item2: any) => {
-          return {
+        children: item.tambon.map((item2: any) => ({
             label: item2.name_th,
             value: item2.name_th,
-          }
-        }),
-      }
-    }),
-
+        })),
+    })),
   }))
 }
 
