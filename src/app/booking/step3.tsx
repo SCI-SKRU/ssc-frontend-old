@@ -58,7 +58,6 @@ export default function Step3({ formRef, form }: Props) {
       }
       distpatch(saveData({ dateSelect: dateSelected }))
     }
-    // console.log(dateSelected)
   }
 
   function loopSuject() {

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import { useAppSelector } from "@/redux/store"
 
 // path now
-import { schoolsize, Optionz } from "./value"
+import { schoolsize } from "./value"
 import { CascaderOption } from "@/types/cascader"
 import api_province from "./api/api_province_with_amphure_tambon.json"
 
