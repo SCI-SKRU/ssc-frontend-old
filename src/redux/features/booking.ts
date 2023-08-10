@@ -1,10 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import type {
-  BookingState,
-  InitialState,
-  SubjectDate,
-  SubjectDetails,
-} from "@/types/booking"
+import type { BookingState, InitialState } from "@/types/booking"
 
 export const initialState = {
   value: {
