@@ -43,33 +43,6 @@ export const optionsCours: Optionz[] = [
   },
 ]
 
-export function getValueProvince(): Promise<Optionz[]> {
-  return fetch(
-    "https://raw.githubusercontent.com/kongvut/thai-province-data/master/api_province_with_amphure_tambon.json"
-  )
-    .then((data) => data.json())
-    .then((response) => {
-      const array: Optionz[] = response.map((data: any, index: any) => ({
-        label: data.name_th,
-        value: data.name_en,
-        children: data.amphure.map((item: any) => {
-          return {
-            label: item.name_th,
-            value: item.name_en,
-            children: item.tambon.map((item2: any) => {
-              return {
-                label: item2.name_th,
-                value: item2.name_en,
-              }
-            }),
-          }
-        }),
-      }))
-
-      return array
-    })
-}
-
 export const schoolsize = [
   { size: "ขนาดเล็ก", option: "1" },
   { size: "ขนาดกลาง", option: "2" },
