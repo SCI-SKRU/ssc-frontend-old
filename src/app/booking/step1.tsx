@@ -120,14 +120,36 @@ export default function Step1({ form }: any) {
         <Form.Item
           name="email"
           label="อีเมล"
-          rules={[{ required: required, message: "โปรดกรอกอีเมล" }]}
+          rules={[
+            { 
+              required: required, 
+              message: "โปรดกรอกอีเมล" 
+            }, 
+            {
+              type: 'email',
+              message: 'รูปแบบของอีเมลไม่ถูกต้อง'
+            },
+          ]}
         >
           <Input placeholder="อีเมล" value={selected.email} />
         </Form.Item>
         <Form.Item
           name="mobile"
           label="เบอร์โทรศัพท์"
-          rules={[{ required: required, message: "โปรดกรอกเบอร์โทรศัพท์" }]}
+          rules={[
+            {
+              required: true,
+              message: 'โปรดกรอกเบอร์โทรศัพท์',
+            },
+            {
+              pattern: /^[0-9]*$/,
+              message: 'รูปแบบของเบอร์โทรศัพท์ไม่ถูกต้อง',
+            },
+            {
+              min: 10,
+              message: 'รูปแบบของเบอร์โทรศัพท์ไม่ถูกต้อง',
+            },
+          ]}
         >
           <Input placeholder="เบอร์โทรศัพท์" value={selected.mobile} />
         </Form.Item>
