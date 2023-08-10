@@ -1,5 +1,8 @@
 "use client"
 
+import React, { useRef, useState } from "react"
+import { useDispatch } from "react-redux"
+import dayjs from "dayjs"
 import {
   Col,
   Row,
@@ -10,17 +13,13 @@ import {
   Form,
   FormInstance,
 } from "antd"
-import { useRef, useState } from "react"
+
 import Step1 from "./step1"
 import Step2 from "./step2"
 import Step3 from "./step3"
 import Result from "./result"
-
 import { saveData } from "@/redux/features/booking"
-import { useDispatch } from "react-redux"
 import { AppDispatch, useAppSelector } from "@/redux/store"
-import React from "react"
-import dayjs from "dayjs"
 
 export default function Booking() {
   const { token } = theme.useToken()

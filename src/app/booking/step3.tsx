@@ -1,17 +1,16 @@
 "use client"
 import React, { useEffect } from "react"
+import { useDispatch } from "react-redux"
 import { Form, DatePicker, DatePickerProps } from "antd"
-
-import CModal from "./Modal"
-
 import type { FormInstance } from "antd"
 import type { RangePickerProps } from "antd/es/date-picker"
-import { AppDispatch, useAppSelector } from "@/redux/store"
-import { useDispatch } from "react-redux"
-import { saveData } from "@/redux/features/booking"
-import "dayjs/locale/th"
 import locale from "antd/es/date-picker/locale/th_TH"
 import dayjs from "dayjs"
+import "dayjs/locale/th"
+
+import CModal from "./Modal"
+import { AppDispatch, useAppSelector } from "@/redux/store"
+import { saveData } from "@/redux/features/booking"
 
 let dateSelected: any = []
 let day = 0

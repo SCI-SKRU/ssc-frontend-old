@@ -1,5 +1,6 @@
 import React from "react"
 import { Sarabun } from "next/font/google"
+
 import StyledComponentsRegistry from "../lib/AntdRegistry"
 
 const sarabun = Sarabun({

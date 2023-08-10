@@ -1,8 +1,7 @@
-import { Form, Input, Select, Cascader, Radio, Space, Button } from "antd"
 import React, { useEffect, useState } from "react"
-import { useAppSelector } from "@/redux/store"
+import { Form, Input, Select, Cascader, Radio, Space } from "antd"
 
-// path now
+import { useAppSelector } from "@/redux/store"
 import { schoolsize } from "./value"
 import { CascaderOption } from "@/types/cascader"
 import api_province from "./api/api_province_with_amphure_tambon.json"
@@ -33,21 +32,8 @@ export default function Step1({ form }: any) {
   const selected = useAppSelector((state) => state.bookingReducer.value)
 
   async function getOptions() {
-    const result = await getProvince()
+    const result = getProvince()
     setOptions(result)
-  }
-
-  const onFill = () => {
-    form.setFieldsValue({
-      schoolname: "โรงเรียนปฤษณา",
-      schoolsize: "ขนาดเล็ก",
-      subaddress: ["สงขลา", "เมืองสงขลา", "บ่อยาง"],
-      operator: "จอห์น แมว",
-      position: "ครู",
-      email: "radis@gmail.com",
-      mobile: "085542225",
-      countclassroom: 1,
-    })
   }
 
   useEffect(() => {
@@ -162,7 +148,6 @@ export default function Step1({ form }: any) {
             </Space>
           </Radio.Group>
         </Form.Item>
-        {/* <Button onClick={onFill}>Auto Fill</Button> */}
       </div>
     </>
   )
