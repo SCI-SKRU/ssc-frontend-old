@@ -68,7 +68,7 @@ interface AppProviderProps {
 }
 
 // Create a context provider
-export function AppProvider({ children }: any) {
+export function AppProvider({ children }: AppProviderProps) {
   const [state, dispatch] = useReducer(appReducer, initialState)
 
   return (
