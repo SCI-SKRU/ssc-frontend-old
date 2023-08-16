@@ -1,6 +1,7 @@
 import React from "react"
 import { Button, ConfigProvider } from "antd"
 import theme from "../theme/themeConfig"
+import Link from "next/link"
 
 const HomePage = () => (
   <ConfigProvider theme={theme}>
