@@ -1,9 +1,8 @@
-import { Form, Input, Select, Cascader, Radio, Space, Button } from "antd"
 import React, { useEffect, useState } from "react"
-import { useAppSelector } from "@/redux/store"
+import { Form, Input, Select, Cascader, Radio, Space } from "antd"
 
-// path now
-import { schoolsize, Optionz } from "./value"
+import { useAppSelector } from "@/redux/store"
+import { schoolsize } from "./value"
 import { CascaderOption } from "@/types/cascader"
 import api_province from "./api/api_province_with_amphure_tambon.json"
 
@@ -13,22 +12,17 @@ const { Option } = Select
 const required: boolean = true
 
 function getProvince(): CascaderOption[] {
-  return api_province.map((data: any, index: any) => ({
+  return api_province.map((data: any) => ({
     label: data.name_th,
     value: data.name_th,
-    children: data.amphure.map((item: any) => {
-      return {
-        label: item.name_th,
-        value: item.name_th,
-        children: item.tambon.map((item2: any) => {
-          return {
-            label: item2.name_th,
-            value: item2.name_th,
-          }
-        }),
-      }
-    }),
-
+    children: data.amphure.map((item: any) => ({
+      label: item.name_th,
+      value: item.name_th,
+      children: item.tambon.map((item2: any) => ({
+        label: item2.name_th,
+        value: item2.name_th,
+      })),
+    })),
   }))
 }
 
@@ -38,21 +32,8 @@ export default function Step1({ form }: any) {
   const selected = useAppSelector((state) => state.bookingReducer.value)
 
   async function getOptions() {
-    const result = await getProvince()
+    const result = getProvince()
     setOptions(result)
-  }
-
-  const onFill = () => {
-    form.setFieldsValue({
-      schoolname: "โรงเรียนปฤษณา",
-      schoolsize: "ขนาดเล็ก",
-      subaddress: ["สงขลา", "เมืองสงขลา", "บ่อยาง"],
-      operator: "จอห์น แมว",
-      position: "ครู",
-      email: "radis@gmail.com",
-      mobile: "085542225",
-      countclassroom: 1,
-    })
   }
 
   useEffect(() => {
@@ -120,14 +101,36 @@ export default function Step1({ form }: any) {
         <Form.Item
           name="email"
           label="อีเมล"
-          rules={[{ required: required, message: "โปรดกรอกอีเมล" }]}
+          rules={[
+            {
+              required: required,
+              message: "โปรดกรอกอีเมล",
+            },
+            {
+              type: "email",
+              message: "รูปแบบของอีเมลไม่ถูกต้อง",
+            },
+          ]}
         >
           <Input placeholder="อีเมล" value={selected.email} />
         </Form.Item>
         <Form.Item
           name="mobile"
           label="เบอร์โทรศัพท์"
-          rules={[{ required: required, message: "โปรดกรอกเบอร์โทรศัพท์" }]}
+          rules={[
+            {
+              required: true,
+              message: "โปรดกรอกเบอร์โทรศัพท์",
+            },
+            {
+              pattern: /^[0-9]*$/,
+              message: "รูปแบบของเบอร์โทรศัพท์ไม่ถูกต้อง",
+            },
+            {
+              min: 10,
+              message: "รูปแบบของเบอร์โทรศัพท์ไม่ถูกต้อง",
+            },
+          ]}
         >
           <Input placeholder="เบอร์โทรศัพท์" value={selected.mobile} />
         </Form.Item>
@@ -145,7 +148,6 @@ export default function Step1({ form }: any) {
             </Space>
           </Radio.Group>
         </Form.Item>
-        {/* <Button onClick={onFill}>Auto Fill</Button> */}
       </div>
     </>
   )
