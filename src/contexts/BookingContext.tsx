@@ -1,38 +1,8 @@
 "use client"
 
-import React, { createContext, useContext, useReducer, ReactNode } from "react"
+import React, { createContext, useContext, useReducer } from "react"
+import type { AppAction, AppProviderProps, AppState } from "../types/booking"
 
-interface SubjectDate {
-  day?: string
-  subject: {
-    subsubject: string
-    mainsubject: string
-  }
-  activity?: boolean
-}
-
-interface SubjectDetails {
-  [key: string]: SubjectDate | undefined
-}
-
-export interface AppState {
-  schoolname: string
-  schoolsize: number
-  subaddress: string[]
-  operator: string
-  position: string
-  email: string
-  mobile: string
-  countclassroom: number
-  cours: number
-  dateSelect: string[]
-  subject_details: SubjectDetails | null
-}
-
-// Define the action types
-type AppAction = { type: "SET_FIELD"; field: keyof AppState; value: any }
-
-// Define the initial state
 const initialState: AppState = {
   schoolname: "",
   schoolsize: 0,
@@ -47,7 +17,6 @@ const initialState: AppState = {
   subject_details: null,
 }
 
-// Define the reducer function
 function appReducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
     case "SET_FIELD":
@@ -57,17 +26,10 @@ function appReducer(state: AppState, action: AppAction): AppState {
   }
 }
 
-// Create the context
 const AppContext = createContext<
   { state: AppState; dispatch: React.Dispatch<AppAction> } | undefined
 >(undefined)
 
-// Create a context provider
-interface AppProviderProps {
-  children: ReactNode
-}
-
-// Create a context provider
 export function AppProvider({ children }: AppProviderProps) {
   const [state, dispatch] = useReducer(appReducer, initialState)
 
@@ -78,7 +40,6 @@ export function AppProvider({ children }: AppProviderProps) {
   )
 }
 
-// Custom hook to access the context
 export function useAppContext() {
   const context = useContext(AppContext)
   if (!context) {

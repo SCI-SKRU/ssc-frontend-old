@@ -2,7 +2,7 @@ import React from "react"
 import { Sarabun } from "next/font/google"
 
 import StyledComponentsRegistry from "../lib/AntdRegistry"
-import { AppProvider } from "@/components/AppContext"
+import { AppProvider } from "@/contexts/BookingContext"
 
 const sarabun = Sarabun({
   subsets: ["thai"],

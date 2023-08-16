@@ -4,5 +4,3 @@ export interface CascaderOption {
   children?: CascaderOption[]
   disabled?: boolean
 }
-
-export default { Option }

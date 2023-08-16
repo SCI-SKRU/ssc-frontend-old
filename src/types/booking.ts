@@ -1,8 +1,10 @@
-export type InitialState = {
-  value: BookingState
+import { ReactNode } from "react"
+
+export interface AppProviderProps {
+  children: ReactNode
 }
 
-export type SubjectDate = {
+interface SubjectDate {
   day?: string
   subject: {
     subsubject: string
@@ -11,21 +13,26 @@ export type SubjectDate = {
   activity?: boolean
 }
 
-export type SubjectDetails = {
+interface SubjectDetails {
   [key: string]: SubjectDate | undefined
 }
 
-export type BookingState = {
+export interface AppState {
   schoolname: string
-  schoolsize: string
+  schoolsize: number
   subaddress: string[]
   operator: string
   position: string
   email: string
   mobile: string
-  countclassroom: string
+  countclassroom: number
   cours: number
   dateSelect: string[]
-  coupon: string
   subject_details: SubjectDetails | null
+}
+
+export interface AppAction {
+  type: "SET_FIELD"
+  field: keyof AppState
+  value: any
 }
