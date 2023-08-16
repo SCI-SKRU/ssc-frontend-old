@@ -1,8 +1,6 @@
 "use client"
 
 import React, { useRef, useState } from "react"
-import { useDispatch } from "react-redux"
-import dayjs from "dayjs"
 import {
   Col,
   Row,
@@ -18,22 +16,24 @@ import Step1 from "./step1"
 import Step2 from "./step2"
 import Step3 from "./step3"
 import Result from "./result"
-import { saveData } from "@/redux/features/booking"
-import { AppDispatch, useAppSelector } from "@/redux/store"
+
+// new data
+import { AppState, useAppContext } from "@/components/AppContext"
 
 export default function Booking() {
   const { token } = theme.useToken()
   const [current, setCurrent] = useState(0)
-  const booking = useAppSelector((state) => state.bookingReducer.value)
   const [form] = Form.useForm()
   const formRef = React.useRef<FormInstance>(null)
-  const distpatch = useDispatch<AppDispatch>()
   const refSubSubject = useRef<HTMLDivElement>(null)
+
+  // new
+  const { state, dispatch } = useAppContext()
 
   const steps = [
     {
       title: "รายละเอียดพื้นฐาน",
-      content: <Step1 form={form} />,
+      content: <Step1 />,
     },
     {
       title: "เลือกคอร์ส",
@@ -61,10 +61,15 @@ export default function Booking() {
   }
 
   const next = (values: any) => {
-    // step3
+    // new
     if (values.dateSelect) {
+      dispatch({
+        type: "SET_FIELD",
+        field: "subject_details",
+        value: [values][0],
+      })
       let date = values.dateSelect
-      let cours = booking.cours
+      let cours = state.cours
       let dateSelected: any = []
       if (cours < 3) cours = 1
       else if (cours < 5) cours = 2
@@ -73,12 +78,21 @@ export default function Booking() {
         const nextDate = date.clone().add(i, "days").format("YYYY-MM-DD")
         dateSelected.push(nextDate)
       }
-      values.dateSelect = dayjs(values.dateSelect).format("YYYY-MM-DD")
-      distpatch(saveData({ dateSelect: dateSelected }))
-      distpatch(saveData({ subject_details: [values][0] }))
-    } else {
-      distpatch(saveData(values))
+      dispatch({
+        type: "SET_FIELD",
+        field: "dateSelect",
+        value: dateSelected,
+      })
+      setCurrent(current + 1)
+      scrollToTop()
+      return
     }
+
+    const keys = Object.keys(values) as Array<keyof AppState>
+    keys.forEach((key) => {
+      dispatch({ type: "SET_FIELD", field: key, value: values[key] })
+    })
+
     setCurrent(current + 1)
     scrollToTop()
   }
@@ -141,7 +155,6 @@ export default function Booking() {
                       type="primary"
                       onClick={() => {
                         message.success("Processing complete!")
-                        console.log(booking)
                       }}
                     >
                       ยืนยัน

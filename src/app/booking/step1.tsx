@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react"
 import { Form, Input, Select, Cascader, Radio, Space } from "antd"
 
-import { useAppSelector } from "@/redux/store"
 import { schoolsize } from "./value"
 import { CascaderOption } from "@/types/cascader"
 import api_province from "./api/api_province_with_amphure_tambon.json"
+
+// new
+import { useAppContext } from "@/components/AppContext"
 
 const { Option } = Select
 
@@ -26,10 +28,10 @@ function getProvince(): CascaderOption[] {
   }))
 }
 
-export default function Step1({ form }: any) {
+export default function Step1() {
   const [options, setOptions] = useState<CascaderOption[]>([])
-
-  const selected = useAppSelector((state) => state.bookingReducer.value)
+  // new
+  const { state } = useAppContext()
 
   async function getOptions() {
     const result = getProvince()
@@ -49,7 +51,7 @@ export default function Step1({ form }: any) {
           name="schoolname"
           rules={[{ required: required, message: "โปรดกรอกชื่อโรงเรียน" }]}
         >
-          <Input placeholder="ชื่อโรงเรียน" value={selected.schoolname} />
+          <Input placeholder="ชื่อโรงเรียน" value={state.schoolname} />
         </Form.Item>
 
         <Form.Item
@@ -59,7 +61,7 @@ export default function Step1({ form }: any) {
         >
           <Select
             placeholder="ขนาดโรงเรียน"
-            value={selected.schoolsize}
+            value={state.schoolsize}
             allowClear
           >
             {schoolsize.map((el, index) => (
@@ -78,7 +80,7 @@ export default function Step1({ form }: any) {
           ]}
         >
           <Cascader
-            value={selected.subaddress}
+            value={state.subaddress}
             options={options}
             placeholder="จังหวัด/อำเภอ/ตำบล"
           />
@@ -89,14 +91,14 @@ export default function Step1({ form }: any) {
           label="ผู้ดำเนินการ"
           rules={[{ required: required, message: "โปรดกรอกชื่อผู้ดำเนินการ" }]}
         >
-          <Input placeholder="ผู้ดำเนินการ" value={selected.operator} />
+          <Input placeholder="ผู้ดำเนินการ" value={state.operator} />
         </Form.Item>
         <Form.Item
           name="position"
           label="ตำแหน่ง"
           rules={[{ required: required, message: "โปรดกรอกตำแหน่ง" }]}
         >
-          <Input placeholder="ตำแหน่ง" value={selected.position} />
+          <Input placeholder="ตำแหน่ง" value={state.position} />
         </Form.Item>
         <Form.Item
           name="email"
@@ -112,7 +114,7 @@ export default function Step1({ form }: any) {
             },
           ]}
         >
-          <Input placeholder="อีเมล" value={selected.email} />
+          <Input placeholder="อีเมล" value={state.email} />
         </Form.Item>
         <Form.Item
           name="mobile"
@@ -132,7 +134,7 @@ export default function Step1({ form }: any) {
             },
           ]}
         >
-          <Input placeholder="เบอร์โทรศัพท์" value={selected.mobile} />
+          <Input placeholder="เบอร์โทรศัพท์" value={state.mobile} />
         </Form.Item>
 
         <Form.Item
@@ -140,7 +142,7 @@ export default function Step1({ form }: any) {
           label="จํานวนห้องเรียนในคอร์ส (ห้องละ 40 คน)"
           rules={[{ required: required, message: "โปรดเลือกจำนวนห้องเรียน" }]}
         >
-          <Radio.Group name="countclassroom" value={selected.countclassroom}>
+          <Radio.Group name="countclassroom" value={state.countclassroom}>
             <Space direction="horizontal">
               <Radio value={1}>1 ห้อง</Radio>
               <Radio value={2}>2 ห้อง</Radio>

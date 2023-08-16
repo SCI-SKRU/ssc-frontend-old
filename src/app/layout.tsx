@@ -2,6 +2,7 @@ import React from "react"
 import { Sarabun } from "next/font/google"
 
 import StyledComponentsRegistry from "../lib/AntdRegistry"
+import { AppProvider } from "@/components/AppContext"
 
 const sarabun = Sarabun({
   subsets: ["thai"],
@@ -16,7 +17,9 @@ export const metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html lang="en">
     <body className={sarabun.className} style={{ margin: 0 }}>
-      <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+      <StyledComponentsRegistry>
+        <AppProvider>{children}</AppProvider>
+      </StyledComponentsRegistry>
     </body>
   </html>
 )

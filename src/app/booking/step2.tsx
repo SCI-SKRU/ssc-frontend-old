@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { Form, Radio } from "antd"
 import type { CheckboxOptionType } from "antd"
-
-import { AppDispatch, useAppSelector } from "@/redux/store"
-import { saveData } from "@/redux/features/booking"
+import { useAppContext } from "@/components/AppContext"
 
 export default function Step2() {
   const [course, setCourse] = useState<CheckboxOptionType[]>([])
-  const selected = useAppSelector((state) => state.bookingReducer.value.cours)
-  const distpatch = useDispatch<AppDispatch>()
+  // new
+  const { state, dispatch } = useAppContext()
 
   async function fetchCourse() {
     const endpoint =
@@ -26,7 +24,11 @@ export default function Step2() {
 
   useEffect(() => {
     fetchCourse()
-    distpatch(saveData({ dateSelect: [] }))
+    dispatch({
+      type: "SET_FIELD",
+      field: "dateSelect",
+      value: [],
+    })
   }, [])
 
   return (
@@ -42,7 +44,7 @@ export default function Step2() {
           <Radio.Group
             style={{ fontSize: "1.5rem" }}
             options={course}
-            value={selected}
+            value={state.cours}
           />
         </Form.Item>
       </div>

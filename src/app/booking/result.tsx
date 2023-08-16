@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react"
-import { Button, Card, Checkbox, Col, Form, Row } from "antd"
-import { useAppSelector } from "@/redux/store"
+import React from "react"
+import { Card, Checkbox, Col, Row } from "antd"
 import { convertToThaiDate } from "@/utils/thaiDateUtils"
 import { findPriceByCode } from "@/utils/findPriceByCode"
+
+// new
+import { useAppContext } from "@/components/AppContext"
 
 const styleFlexBetween = {
   display: "flex",
@@ -22,9 +24,9 @@ const disSchoolSize = [
 ]
 
 export default function Result() {
-  const booking = useAppSelector((state) => state.bookingReducer.value)
-  const booking_subject_details = booking.subject_details
-  // console.log(booking)
+  // new
+  const { state, dispatch } = useAppContext()
+  const booking_subject_details = state.subject_details
 
   // ค่าดำเนินการ
   const defaultOperationFee = 10000
@@ -66,29 +68,29 @@ export default function Result() {
   }
 
   // รวมราคา ใช้คูปอง
-  function sumDisCoupon() {
-    const resultCoupon = booking.coupon ? findPriceCoupon(booking.coupon) : 0
-    if (resultCoupon) {
-      // น้อยกว่า 100 นับเป็น % มากกว่า 100 นับเป็น บาท
-      if (resultCoupon < 100) {
-        const resultCal = sumPrice * (resultCoupon / 100)
-        sumPrice -= Math.round(resultCal)
-        return Math.round(resultCal)
-      } else if (resultCoupon > 100) {
-        sumPrice -= resultCoupon
-        return resultCoupon
-      }
-    } else if (resultCoupon === 0) {
-      return 0
-    } else {
-      alert("Error Coupon")
-    }
-  }
+  // function sumDisCoupon() {
+  //   const resultCoupon = booking.coupon ? findPriceCoupon(booking.coupon) : 0
+  //   if (resultCoupon) {
+  //     // น้อยกว่า 100 นับเป็น % มากกว่า 100 นับเป็น บาท
+  //     if (resultCoupon < 100) {
+  //       const resultCal = sumPrice * (resultCoupon / 100)
+  //       sumPrice -= Math.round(resultCal)
+  //       return Math.round(resultCal)
+  //     } else if (resultCoupon > 100) {
+  //       sumPrice -= resultCoupon
+  //       return resultCoupon
+  //     }
+  //   } else if (resultCoupon === 0) {
+  //     return 0
+  //   } else {
+  //     alert("Error Coupon")
+  //   }
+  // }
 
   // รวมราคา ส่วนลดขนาดโรงเรียน
   function sumDisSchoolSize() {
     const targetSchoolSize = disSchoolSize.find(
-      (size) => size.size === booking.schoolsize
+      (size) => Number(size.size) === state.schoolsize
     )
     if (targetSchoolSize) {
       const resultCal = sumPrice * (targetSchoolSize.value / 100)
@@ -104,8 +106,6 @@ export default function Result() {
     return resultCal
   }
 
-  useEffect(() => {}, [])
-
   return (
     <>
       <Row gutter={[16, 16]} style={{ padding: "12px" }}>
@@ -113,21 +113,21 @@ export default function Result() {
           <Card title="สรุป" bordered={false} style={{ textAlign: "left" }}>
             <div style={{ fontSize: "1rem" }}>
               <p>
-                โรงเรียน: <span>{booking.schoolname}</span>
+                โรงเรียน: <span>{state.schoolname}</span>
               </p>
               <p>
-                ตำบล: {booking.subaddress[2]}, อำเภอ: {booking.subaddress[1]},
-                จังหวัด: {booking.subaddress[0]}
+                ตำบล: {state.subaddress[2]}, อำเภอ: {state.subaddress[1]},
+                จังหวัด: {state.subaddress[0]}
               </p>
               <p>
-                ผู้ดำเนินการจอง: <span>{booking.operator}</span>
+                ผู้ดำเนินการจอง: <span>{state.operator}</span>
               </p>
               <p>
-                อีเมล: <span>{booking.email}</span>
+                อีเมล: <span>{state.email}</span>
               </p>
-              <p>จำนวนห้้องเรียน: {booking.countclassroom} ห้อง</p>
+              <p>จำนวนห้้องเรียน: {state.countclassroom} ห้อง</p>
               <hr />
-              {booking.dateSelect.map((item, i) => {
+              {state.dateSelect.map((item, i) => {
                 return (
                   <div key={i}>
                     <p>
@@ -170,7 +170,7 @@ export default function Result() {
                             )}
                           </p>
                         </div>
-                        {booking.cours != 2 && (
+                        {state.cours != 2 && (
                           <div style={styleFlexBetween}>
                             <p>
                               กิจกรรมช่วงค่ำ :

@@ -1,6 +1,5 @@
 "use client"
 import React, { useEffect } from "react"
-import { useDispatch } from "react-redux"
 import { Form, DatePicker, DatePickerProps } from "antd"
 import type { FormInstance } from "antd"
 import type { RangePickerProps } from "antd/es/date-picker"
@@ -9,8 +8,7 @@ import dayjs from "dayjs"
 import "dayjs/locale/th"
 
 import CModal from "./Modal"
-import { AppDispatch, useAppSelector } from "@/redux/store"
-import { saveData } from "@/redux/features/booking"
+import { useAppContext } from "@/components/AppContext"
 
 let dateSelected: any = []
 let day = 0
@@ -22,10 +20,9 @@ type Props = {
 }
 
 export default function Step3({ formRef, form }: Props) {
-  const booking = useAppSelector((state) => state.bookingReducer.value)
-  const distpatch = useDispatch<AppDispatch>()
+  const { state, dispatch } = useAppContext()
 
-  let timeSlot = booking.cours
+  let timeSlot = state.cours
 
   if (timeSlot == 3 || timeSlot == 4) {
     day = 2
@@ -43,7 +40,8 @@ export default function Step3({ formRef, form }: Props) {
   const changeDate: DatePickerProps["onChange"] = (date, dateString) => {
     if (date) {
       dateSelected = []
-      let cours = booking.cours
+      let cours = state.cours
+      console.log(cours)
       if (cours < 3) cours = 1
       else if (cours < 5) cours = 2
       else if (cours < 7) cours = 3
@@ -55,7 +53,11 @@ export default function Step3({ formRef, form }: Props) {
           formRef.current?.resetFields(["dateSelect"])
         }
       }
-      distpatch(saveData({ dateSelect: dateSelected }))
+      dispatch({
+        type: "SET_FIELD",
+        field: "dateSelect",
+        value: dateSelected,
+      })
     }
   }
 
@@ -141,7 +143,7 @@ export default function Step3({ formRef, form }: Props) {
 
   useEffect(() => {
     formRef.current?.resetFields(["dateSelect"])
-    dateSelected = booking.dateSelect
+    dateSelected = state.dateSelect
   }, [])
 
   return (
@@ -155,7 +157,7 @@ export default function Step3({ formRef, form }: Props) {
         labelCol={{ span: 10 }}
         wrapperCol={{ span: 4 }}
         initialValue={
-          booking.dateSelect[0] ? dayjs(booking.dateSelect[0]) : undefined
+          state.dateSelect[0] ? dayjs(state.dateSelect[0]) : undefined
         }
       >
         <DatePicker
@@ -164,7 +166,7 @@ export default function Step3({ formRef, form }: Props) {
           disabledDate={disabledDate}
         />
       </Form.Item>
-      {booking.dateSelect[0] ? loopSuject() : ""}
+      {state.dateSelect[0] ? loopSuject() : ""}
     </>
   )
 }
