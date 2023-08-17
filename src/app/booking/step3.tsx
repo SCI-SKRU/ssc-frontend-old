@@ -8,7 +8,7 @@ import dayjs from "dayjs"
 import "dayjs/locale/th"
 
 import CModal from "./Modal"
-import { useAppContext } from "@/components/AppContext"
+import { useAppContext } from "@/contexts/BookingContext"
 
 let dateSelected: any = []
 let day = 0

@@ -4,7 +4,7 @@ import { convertToThaiDate } from "@/utils/thaiDateUtils"
 import { findPriceByCode } from "@/utils/findPriceByCode"
 
 // new
-import { useAppContext } from "@/components/AppContext"
+import { useAppContext } from "@/contexts/BookingContext"
 
 const styleFlexBetween = {
   display: "flex",

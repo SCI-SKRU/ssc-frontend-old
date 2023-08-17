@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
 import { Form, Radio } from "antd"
 import type { CheckboxOptionType } from "antd"
-import { useAppContext } from "@/components/AppContext"
+import { useAppContext } from "@/contexts/BookingContext"
 
 export default function Step2() {
   const [course, setCourse] = useState<CheckboxOptionType[]>([])

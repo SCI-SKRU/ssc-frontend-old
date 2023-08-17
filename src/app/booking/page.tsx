@@ -18,7 +18,8 @@ import Step3 from "./step3"
 import Result from "./result"
 
 // new data
-import { AppState, useAppContext } from "@/components/AppContext"
+import { useAppContext } from "@/contexts/BookingContext"
+import type { AppState } from "@/types/booking"
 
 export default function Booking() {
   const { token } = theme.useToken()

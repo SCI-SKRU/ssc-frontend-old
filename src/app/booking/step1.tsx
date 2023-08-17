@@ -6,7 +6,7 @@ import { CascaderOption } from "@/types/cascader"
 import api_province from "./api/api_province_with_amphure_tambon.json"
 
 // new
-import { useAppContext } from "@/components/AppContext"
+import { useAppContext } from "@/contexts/BookingContext"
 
 const { Option } = Select
 
