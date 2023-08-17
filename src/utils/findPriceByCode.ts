@@ -1,4 +1,3 @@
-import type { Level, Subject } from "@/types/subject"
 import jsonData from "@/app/booking/api/subject.json"
 
 export function findPriceByCode(targetCode: string) {
