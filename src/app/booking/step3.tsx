@@ -41,7 +41,6 @@ export default function Step3({ formRef, form }: Props) {
     if (date) {
       dateSelected = []
       let cours = state.cours
-      console.log(cours)
       if (cours < 3) cours = 1
       else if (cours < 5) cours = 2
       else if (cours < 7) cours = 3

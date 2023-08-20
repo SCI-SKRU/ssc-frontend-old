@@ -1,12 +1,31 @@
-import jsonData from "@/app/booking/api/subject.json"
+import {
+  transformJSONSubjects,
+  TransformedData,
+} from "@/utils/transformJSONSubjects"
+let jsonData: TransformedData
+
+export async function fetchSubjects(): Promise<TransformedData> {
+  const endpoint =
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}/subjects` ||
+    "http://localhost:3000/api/v1/subjects"
+  const response = await fetch(endpoint)
+  const result = await response.json()
+  const resultJSON = transformJSONSubjects(result)
+  jsonData = resultJSON
+  return resultJSON
+}
+
+fetchSubjects()
 
 export function findPriceByCode(targetCode: string) {
-  const subject = jsonData.find((item) =>
-    item.level.some((level) => level.code === targetCode)
+  const subject = jsonData.subjects.find((item) =>
+    item.subsubject.some((level) => level.code === targetCode)
   )
 
   if (subject) {
-    const targetLevel = subject.level.find((level) => level.code === targetCode)
+    const targetLevel = subject.subsubject.find(
+      (level) => level.code === targetCode
+    )
 
     if (targetLevel) {
       const price = targetLevel.price

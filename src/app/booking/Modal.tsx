@@ -14,7 +14,8 @@ import {
 import type { FormInstance, RadioChangeEvent } from "antd"
 
 import { convertToThaiDate } from "@/utils/thaiDateUtils"
-import subjectAll from "./api/subject.json"
+import { fetchSubjects } from "@/utils/findPriceByCode"
+import { TransformedData } from "@/utils/transformJSONSubjects"
 
 type Props = {
   form: FormInstance
@@ -38,8 +39,13 @@ function CModal({
   const [subSubjectSelected, setSubSubjectSelected] = useState(undefined)
   const [isMainSub, setIsMainSub] = useState<number>(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [subjects, setSubjects] = useState<TransformedData>()
 
   const refSubSubject = useRef<HTMLDivElement>(null)
+
+  async function fetchSubject() {
+    setSubjects(await fetchSubjects())
+  }
 
   const showModal = (e: any, isMainSub: number) => {
     setIsMainSub(isMainSub)
@@ -103,6 +109,7 @@ function CModal({
   }
 
   useEffect(() => {
+    fetchSubject()
     resetSubject()
     form.setFieldsValue({
       [`${date}`]: {
@@ -211,13 +218,8 @@ function CModal({
               onChange={mainRadioOnchange}
             >
               <Space direction="vertical">
-                {subjectAll.map((option, i) => (
-                  <Radio
-                    key={i}
-                    title={option.title}
-                    value={option.id}
-                    disabled={option.disable}
-                  >
+                {subjects?.subjects.map((option, i) => (
+                  <Radio key={i} title={option.title} value={option.id}>
                     {option.title}
                   </Radio>
                 ))}
@@ -236,9 +238,9 @@ function CModal({
                   value={subSubjectSelected}
                   onChange={subRadioOnchange}
                 >
-                  {subjectAll
+                  {subjects?.subjects
                     .find((subject) => subject.id === mainSubjectSelected)
-                    ?.level.map((item, i) => (
+                    ?.subsubject.map((item, i) => (
                       <Space direction="vertical" key={i}>
                         <Radio value={item.code} key={`radio${i}`}>
                           {item.name} ({item.level})
