@@ -12,14 +12,18 @@ export async function fetchSubjects(): Promise<TransformedData> {
   const result = await response.json()
   const resultJSON = transformJSONSubjects(result)
   jsonData = resultJSON
+  console.log(jsonData)
   return resultJSON
 }
 
 fetchSubjects()
 
 export function findPriceByCode(targetCode: string) {
+  fetchSubjects()
   const subject = jsonData.subjects.find((item) =>
-    item.subsubject.some((level) => level.code === targetCode)
+    item.subsubject.some((level) => {
+      return level.code === targetCode
+    })
   )
 
   if (subject) {
@@ -38,4 +42,15 @@ export function findPriceByCode(targetCode: string) {
   } else {
     console.log(`Subject with code ${targetCode} not found`)
   }
+}
+
+export function findNameSubjectByCode(code: string) {
+  for (const subject of jsonData.subjects) {
+    for (const subsubject of subject.subsubject) {
+      if (subsubject.code === code) {
+        return subsubject.name
+      }
+    }
+  }
+  return null // Return null if code is not found
 }

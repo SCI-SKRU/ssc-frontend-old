@@ -1,7 +1,7 @@
 import React from "react"
 import { Card, Checkbox, Col, Row } from "antd"
 import { convertToThaiDate } from "@/utils/thaiDateUtils"
-import { findPriceByCode } from "@/utils/findPriceByCode"
+import { findNameSubjectByCode, findPriceByCode } from "@/utils/findPriceByCode"
 
 // new
 import { useAppContext } from "@/contexts/BookingContext"
@@ -46,8 +46,8 @@ export default function Result() {
   // ค้นหาราคาวิชา
   function findPrice(afterString: string) {
     const parts = afterString.split(" ")
-    if (parts && parts.length >= 2) {
-      const result = findPriceByCode(parts[1])
+    if (parts) {
+      const result = findPriceByCode(parts[0])
       sumPrice = sumPrice + Number(result)
       return result
     } else {
@@ -136,10 +136,12 @@ export default function Result() {
                     <div style={styleFlexBetween}>
                       <p>
                         09.00 - 12.00 :{" "}
-                        {
-                          booking_subject_details?.[`date${i}`]?.subject
-                            .mainsubject
-                        }
+                        {findNameSubjectByCode(
+                          String(
+                            booking_subject_details?.[`date${i}`]?.subject
+                              .mainsubject
+                          )
+                        )}
                       </p>
                       <p>
                         {findPrice(
@@ -156,10 +158,12 @@ export default function Result() {
                         <div style={styleFlexBetween}>
                           <p>
                             13.00 - 16.00 :{" "}
-                            {
-                              booking_subject_details?.[`date${i}`]?.subject
-                                .subsubject
-                            }
+                            {findNameSubjectByCode(
+                              String(
+                                booking_subject_details?.[`date${i}`]?.subject
+                                  .subsubject
+                              )
+                            )}
                           </p>
                           <p>
                             {findPrice(

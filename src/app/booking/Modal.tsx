@@ -129,38 +129,36 @@ function CModal({
 
   return (
     <>
-      <div>
-        <Divider orientation="left">{convertToThaiDate(dayString)}</Divider>
+      <Divider orientation="left">{convertToThaiDate(dayString)}</Divider>
 
-        <Form.Item
-          name={[`${date}`, "day"]}
-          label={"วันที่"}
-          initialValue={dayString}
-          style={{ display: "none" }}
-        >
-          <Input bordered={false} />
-        </Form.Item>
+      <Form.Item
+        name={[`${date}`, "day"]}
+        label={"วันที่"}
+        initialValue={dayString}
+        style={{ display: "none" }}
+      >
+        <Input bordered={false} />
+      </Form.Item>
 
-        <Form.Item
-          name={[`${date}`]}
-          label="09.00 - 12.00"
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 8 }}
-          style={{ marginBottom: 0 }}
-        >
-          <Space direction="horizontal" align="start">
-            <Button type="primary" onClick={(e) => showModal(e, 1)}>
-              เลือกวิชา
-            </Button>
-            <Form.Item
-              name={[`${date}`, `subject`, `mainsubject`]}
-              rules={[{ required: true, message: "โปรดเลือกวิชา" }]}
-            >
-              <Input disabled />
-            </Form.Item>
-          </Space>
-        </Form.Item>
-      </div>
+      <Form.Item
+        name={[`${date}`]}
+        label="09.00 - 12.00"
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 8 }}
+        style={{ marginBottom: 0 }}
+      >
+        <Space direction="horizontal" align="start">
+          <Button type="primary" onClick={(e) => showModal(e, 1)}>
+            เลือกวิชา
+          </Button>
+          <Form.Item
+            name={[`${date}`, `subject`, `mainsubject`]}
+            rules={[{ required: true, message: "โปรดเลือกวิชา" }]}
+          >
+            <Input disabled />
+          </Form.Item>
+        </Space>
+      </Form.Item>
 
       {disableCheckbox && (
         <>

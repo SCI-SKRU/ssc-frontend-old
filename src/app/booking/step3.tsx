@@ -7,7 +7,8 @@ import locale from "antd/es/date-picker/locale/th_TH"
 import dayjs from "dayjs"
 import "dayjs/locale/th"
 
-import CModal from "./Modal"
+// import CModal from "./Modal"
+import CustomSelect from "./Select"
 import { useAppContext } from "@/contexts/BookingContext"
 
 let dateSelected: any = []
@@ -67,7 +68,7 @@ export default function Step3({ formRef, form }: Props) {
     // เลือกคอร์ส 2 เท่านั่น
     if (timeSlot == 2) {
       return (
-        <CModal
+        <CustomSelect
           form={form}
           dayString={dateSelected[0]}
           date={`date${0}`}
@@ -86,7 +87,7 @@ export default function Step3({ formRef, form }: Props) {
           }
         }
         element.push(
-          <CModal
+          <CustomSelect
             form={form}
             dayString={dateSelected[i]}
             date={`date${i}`}
@@ -107,7 +108,7 @@ export default function Step3({ formRef, form }: Props) {
           }
         }
         element.push(
-          <CModal
+          <CustomSelect
             form={form}
             dayString={dateSelected[i]}
             date={`date${i}`}
@@ -125,7 +126,7 @@ export default function Step3({ formRef, form }: Props) {
           disable1Day = false
         }
         element.push(
-          <CModal
+          <CustomSelect
             form={form}
             dayString={dateSelected[i]}
             date={`date${i}`}
