@@ -32,10 +32,10 @@ export default function Booking() {
   const { state, dispatch } = useAppContext()
 
   const steps = [
-    // {
-    //   title: "รายละเอียดพื้นฐาน",
-    //   content: <Step1 />,
-    // },
+    {
+      title: "รายละเอียดพื้นฐาน",
+      content: <Step1 />,
+    },
     {
       title: "เลือกคอร์ส",
       content: <Step2 />,
