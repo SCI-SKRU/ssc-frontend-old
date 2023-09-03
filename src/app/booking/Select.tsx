@@ -3,6 +3,7 @@ import { Select, Divider, Form, Input, Space, Button, Checkbox } from "antd"
 import type { FormInstance } from "antd"
 
 import { convertToThaiDate } from "@/utils/thaiDateUtils"
+import { useAppContext } from "@/contexts/BookingContext"
 
 const handleChange = (value: string) => {
   // console.log(value)
@@ -46,11 +47,21 @@ export default function CustomSelect({
   index,
 }: Props) {
   const [option, setOption] = useState<Options1[]>()
+  const { state } = useAppContext()
 
   const fetchData = async () => {
     try {
+      let startDate = ""
+      let endDate = ""
+      if (state.dateSelect.length === 1) {
+        startDate = state.dateSelect[0]
+        endDate = state.dateSelect[0]
+      } else {
+        startDate = state.dateSelect[0]
+        endDate = state.dateSelect[state.dateSelect.length - 1]
+      }
       const response = await fetch(
-        "https://4dc0-159-223-93-76.ngrok-free.app/api/v1/subjects"
+        `https://4dc0-159-223-93-76.ngrok-free.app/api/v1/subjects?startDate=${startDate}&endDate=${endDate}`
       )
       const data = await response.json()
       return data.subjects
