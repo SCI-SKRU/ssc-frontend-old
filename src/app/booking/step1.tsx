@@ -141,6 +141,9 @@ export default function Step1() {
           name="countclassroom"
           label="จํานวนห้องเรียนในคอร์ส (ห้องละ 40 คน)"
           rules={[{ required: required, message: "โปรดเลือกจำนวนห้องเรียน" }]}
+          labelAlign="left"
+          labelCol={{ span: 0 }}
+          wrapperCol={{ span: 0 }}
         >
           <Radio.Group name="countclassroom" value={state.countclassroom}>
             <Space direction="horizontal">

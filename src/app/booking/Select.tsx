@@ -111,23 +111,21 @@ export default function CustomSelect({
         name={[`${date}`]}
         label="09.00 - 12.00"
         labelCol={{ span: 6 }}
-        wrapperCol={{ span: 8 }}
+        wrapperCol={{ span: 18 }}
         style={{ marginBottom: 0 }}
       >
-        <Space direction="horizontal" align="start">
-          <Form.Item
-            name={[`${date}`, `subject`, `mainsubject`]}
-            rules={[{ required: true, message: "โปรดเลือกวิชา" }]}
-            initialValue={"เลือกวิชา"}
-          >
-            <Select
-              // defaultValue="เลือกวิชา"
-              style={{ width: 200 }}
-              onChange={(e) => handleChange(e)}
-              options={option || []}
-            />
-          </Form.Item>
-        </Space>
+        <Form.Item
+          name={[`${date}`, `subject`, `mainsubject`]}
+          rules={[{ required: true, message: "โปรดเลือกวิชา" }]}
+          initialValue={"เลือกวิชา"}
+        >
+          <Select
+            // defaultValue="เลือกวิชา"
+            // style={{ width: "300px" }}
+            onChange={(e) => handleChange(e)}
+            options={option || []}
+          />
+        </Form.Item>
       </Form.Item>
 
       {disableCheckbox && (
@@ -136,23 +134,21 @@ export default function CustomSelect({
             name={[`${date}`]}
             label="13.00 - 16.00"
             labelCol={{ span: 6 }}
-            wrapperCol={{ span: 8 }}
+            wrapperCol={{ span: 18 }}
             style={{ marginBottom: 0 }}
           >
-            <Space direction="horizontal" align="start">
-              <Form.Item
-                name={[`${date}`, `subject`, `subsubject`]}
-                rules={[{ required: true, message: "โปรดเลือกวิชา" }]}
-                initialValue={"เลือกวิชา"}
-              >
-                <Select
-                  // defaultValue="เลือกวิชา"
-                  style={{ width: 200 }}
-                  onChange={handleChange}
-                  options={option || []}
-                />
-              </Form.Item>
-            </Space>
+            <Form.Item
+              name={[`${date}`, `subject`, `subsubject`]}
+              rules={[{ required: true, message: "โปรดเลือกวิชา" }]}
+              initialValue={"เลือกวิชา"}
+            >
+              <Select
+                // defaultValue="เลือกวิชา"
+                // style={{ width: "300px" }}
+                onChange={handleChange}
+                options={option || []}
+              />
+            </Form.Item>
           </Form.Item>
 
           {/* disable1Day คือ ถ้าเลือกคอส์ 1 วันจะให้ปิดกิจกรรมช่วงค่ำ */}

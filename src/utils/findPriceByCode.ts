@@ -12,7 +12,6 @@ export async function fetchSubjects(): Promise<TransformedData> {
   const result = await response.json()
   const resultJSON = transformJSONSubjects(result)
   jsonData = resultJSON
-  console.log(jsonData)
   return resultJSON
 }
 

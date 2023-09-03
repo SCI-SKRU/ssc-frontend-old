@@ -10,12 +10,14 @@ import {
   theme,
   Form,
   FormInstance,
+  ConfigProvider,
 } from "antd"
 
 import Step1 from "./step1"
 import Step2 from "./step2"
 import Step3 from "./step3"
 import Result from "./result"
+import customTheme from "@/theme/themeConfig"
 
 // new data
 import { useAppContext } from "@/contexts/BookingContext"
@@ -115,58 +117,63 @@ export default function Booking() {
 
   return (
     <>
-      <Row justify={"center"}>
-        <Col xs={20} lg={12}>
-          <Row gutter={[16, 16]}>
-            <Col span={24}>
-              <div style={{ marginTop: "20px" }}>
-                <Steps current={current} items={items} />
-              </div>
-            </Col>
-            <Col span={24}>
-              <Form
-                ref={formRef}
-                form={form}
-                onFinish={next}
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 12 }}
-              >
-                <div style={contentStyle} ref={refSubSubject}>
-                  {steps[current].content}
+      <ConfigProvider theme={customTheme}>
+        <Row justify={"center"}>
+          <Col xs={20} lg={12}>
+            <Row gutter={[16, 16]}>
+              <Col span={24}>
+                <div style={{ marginTop: "20px" }}>
+                  <Steps current={current} items={items} />
                 </div>
-                <div
-                  style={{
-                    marginTop: 24,
-                    display: "flex",
-                    justifyContent: "end",
-                  }}
+              </Col>
+              <Col span={24}>
+                <Form
+                  ref={formRef}
+                  form={form}
+                  onFinish={next}
+                  labelCol={{ span: 8 }}
+                  wrapperCol={{ span: 12 }}
                 >
-                  {current > 0 && (
-                    <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
-                      ย้อนกลับ
-                    </Button>
-                  )}
-                  {current < steps.length - 1 && (
-                    <Button type="primary" htmlType="submit">
-                      {current == 4 - 1 ? "สรุปรวม" : "ต่อไป"}
-                    </Button>
-                  )}
-                  {current === steps.length - 1 && (
-                    <Button
-                      type="primary"
-                      onClick={() => {
-                        message.success("Processing complete!")
-                      }}
-                    >
-                      ยืนยัน
-                    </Button>
-                  )}
-                </div>
-              </Form>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+                  <div style={contentStyle} ref={refSubSubject}>
+                    {steps[current].content}
+                  </div>
+                  <div
+                    style={{
+                      marginTop: 24,
+                      display: "flex",
+                      justifyContent: "end",
+                    }}
+                  >
+                    {current > 0 && (
+                      <Button
+                        style={{ margin: "0 8px" }}
+                        onClick={() => prev()}
+                      >
+                        ย้อนกลับ
+                      </Button>
+                    )}
+                    {current < steps.length - 1 && (
+                      <Button type="primary" htmlType="submit">
+                        {current == 4 - 1 ? "สรุปรวม" : "ต่อไป"}
+                      </Button>
+                    )}
+                    {current === steps.length - 1 && (
+                      <Button
+                        type="primary"
+                        onClick={() => {
+                          message.success("Processing complete!")
+                        }}
+                      >
+                        ยืนยัน
+                      </Button>
+                    )}
+                  </div>
+                </Form>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </ConfigProvider>
     </>
   )
 }

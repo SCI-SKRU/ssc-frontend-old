@@ -155,7 +155,7 @@ export default function Step3({ formRef, form }: Props) {
         label="เลือกวันที่"
         rules={[{ required: true, message: "โปรดเลือกวันที่" }]}
         labelCol={{ span: 10 }}
-        wrapperCol={{ span: 4 }}
+        wrapperCol={{ span: 7 }}
         initialValue={
           state.dateSelect[0] ? dayjs(state.dateSelect[0]) : undefined
         }
