@@ -2,8 +2,8 @@ import { Cascader, Form, Input, Radio, Select, Space } from 'antd'
 import { useEffect, useState } from 'react'
 
 import { CascaderOption } from '@/types/cascader'
-import api_province from './api/api_province_with_amphure_tambon.json'
-import { schoolsize } from './value'
+import api_province from '../api/api_province_with_amphure_tambon.json'
+import { schoolsize } from '../value'
 
 // new
 import { useAppContext } from '@/contexts/BookingContext'

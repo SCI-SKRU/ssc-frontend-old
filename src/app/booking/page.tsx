@@ -14,10 +14,10 @@ import {
 import React, { useRef, useState } from 'react'
 
 import customTheme from '@/theme/themeConfig'
-import Result from './result'
-import Step1 from './step1'
-import Step2 from './step2'
-import Step3 from './step3'
+import Result from './components/result'
+import Step1 from './components/step1'
+import Step2 from './components/step2'
+import Step3 from './components/step3'
 
 // new data
 import { useAppContext } from '@/contexts/BookingContext'
