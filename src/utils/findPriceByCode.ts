@@ -15,8 +15,6 @@ export async function fetchSubjects(): Promise<TransformedData> {
   return resultJSON
 }
 
-fetchSubjects()
-
 export function findPriceByCode(targetCode: string) {
   fetchSubjects()
   const subject = jsonData.subjects.find((item) =>
