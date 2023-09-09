@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react"
-import { Select, Divider, Form, Input, Space, Button, Checkbox } from "antd"
-import type { FormInstance } from "antd"
+import type { FormInstance } from 'antd'
+import { Checkbox, Divider, Form, Input, Select } from 'antd'
+import { useEffect, useState } from 'react'
 
-import { convertToThaiDate } from "@/utils/thaiDateUtils"
-import { useAppContext } from "@/contexts/BookingContext"
+import { useAppContext } from '@/contexts/BookingContext'
+import { convertToThaiDate } from '@/utils/thaiDateUtils'
 
 const handleChange = (value: string) => {
   // console.log(value)
@@ -51,8 +51,8 @@ export default function CustomSelect({
 
   const fetchData = async () => {
     try {
-      let startDate = ""
-      let endDate = ""
+      let startDate = ''
+      let endDate = ''
       if (state.dateSelect.length === 1) {
         startDate = state.dateSelect[0]
         endDate = state.dateSelect[0]
@@ -61,12 +61,12 @@ export default function CustomSelect({
         endDate = state.dateSelect[state.dateSelect.length - 1]
       }
       const response = await fetch(
-        `https://4dc0-159-223-93-76.ngrok-free.app/api/v1/subjects?startDate=${startDate}&endDate=${endDate}`
+        `https://4dc0-159-223-93-76.ngrok-free.app/api/v1/subjects?startDate=${startDate}&endDate=${endDate}`,
       )
       const data = await response.json()
       return data.subjects
     } catch (error) {
-      console.error("Error fetching data:", error)
+      console.error('Error fetching data:', error)
       return []
     }
   }
@@ -78,7 +78,7 @@ export default function CustomSelect({
 
       fetchedData.forEach((course: Subjects) => {
         const existingCategory = convertData.find(
-          (cat) => cat.label === course.category
+          (cat) => cat.label === course.category,
         )
 
         if (existingCategory) {
@@ -110,10 +110,10 @@ export default function CustomSelect({
       <Divider orientation="left">{convertToThaiDate(dayString)}</Divider>
 
       <Form.Item
-        name={[`${date}`, "day"]}
-        label={"วันที่"}
+        name={[`${date}`, 'day']}
+        label={'วันที่'}
         initialValue={dayString}
-        style={{ display: "none" }}
+        style={{ display: 'none' }}
       >
         <Input bordered={false} />
       </Form.Item>
@@ -127,8 +127,8 @@ export default function CustomSelect({
       >
         <Form.Item
           name={[`${date}`, `subject`, `mainsubject`]}
-          rules={[{ required: true, message: "โปรดเลือกวิชา" }]}
-          initialValue={"เลือกวิชา"}
+          rules={[{ required: true, message: 'โปรดเลือกวิชา' }]}
+          initialValue={'เลือกวิชา'}
         >
           <Select
             // defaultValue="เลือกวิชา"
@@ -150,8 +150,8 @@ export default function CustomSelect({
           >
             <Form.Item
               name={[`${date}`, `subject`, `subsubject`]}
-              rules={[{ required: true, message: "โปรดเลือกวิชา" }]}
-              initialValue={"เลือกวิชา"}
+              rules={[{ required: true, message: 'โปรดเลือกวิชา' }]}
+              initialValue={'เลือกวิชา'}
             >
               <Select
                 // defaultValue="เลือกวิชา"
