@@ -1,21 +1,21 @@
-import React, { useState, useEffect, useRef } from "react"
+import type { FormInstance, RadioChangeEvent } from 'antd'
 import {
   Button,
   Checkbox,
+  Col,
   Divider,
   Form,
   Input,
   Modal,
-  Space,
-  Col,
-  Row,
   Radio,
-} from "antd"
-import type { FormInstance, RadioChangeEvent } from "antd"
+  Row,
+  Space,
+} from 'antd'
+import { useEffect, useRef, useState } from 'react'
 
-import { convertToThaiDate } from "@/utils/thaiDateUtils"
-import { fetchSubjects } from "@/utils/findPriceByCode"
-import { TransformedData } from "@/utils/transformJSONSubjects"
+import { fetchSubjects } from '@/utils/findPriceByCode'
+import { convertToThaiDate } from '@/utils/thaiDateUtils'
+import { TransformedData } from '@/utils/transformJSONSubjects'
 
 type Props = {
   form: FormInstance
@@ -35,7 +35,7 @@ function CModal({
   index,
 }: Props) {
   const [mainSubjectSelected, setMainSubjectSelected] = useState(undefined)
-  const [titleMainSubject, setTitleMainSubject] = useState("")
+  const [titleMainSubject, setTitleMainSubject] = useState('')
   const [subSubjectSelected, setSubSubjectSelected] = useState(undefined)
   const [isMainSub, setIsMainSub] = useState<number>(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -73,7 +73,7 @@ function CModal({
         },
       })
     } else {
-      alert("Some thing error")
+      alert('Some thing error')
       resetSubject()
     }
 
@@ -90,8 +90,8 @@ function CModal({
     setTimeout(() => {
       if (refSubSubject.current) {
         refSubSubject.current.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
+          behavior: 'smooth',
+          block: 'start',
         })
       }
     }, 200)
@@ -114,14 +114,14 @@ function CModal({
     form.setFieldsValue({
       [`${date}`]: {
         subject: {
-          subsubject: "",
+          subsubject: '',
         },
       },
     })
     form.setFieldsValue({
       [`${date}`]: {
         subject: {
-          mainsubject: "",
+          mainsubject: '',
         },
       },
     })
@@ -132,10 +132,10 @@ function CModal({
       <Divider orientation="left">{convertToThaiDate(dayString)}</Divider>
 
       <Form.Item
-        name={[`${date}`, "day"]}
-        label={"วันที่"}
+        name={[`${date}`, 'day']}
+        label={'วันที่'}
         initialValue={dayString}
-        style={{ display: "none" }}
+        style={{ display: 'none' }}
       >
         <Input bordered={false} />
       </Form.Item>
@@ -153,7 +153,7 @@ function CModal({
           </Button>
           <Form.Item
             name={[`${date}`, `subject`, `mainsubject`]}
-            rules={[{ required: true, message: "โปรดเลือกวิชา" }]}
+            rules={[{ required: true, message: 'โปรดเลือกวิชา' }]}
           >
             <Input disabled />
           </Form.Item>
@@ -175,7 +175,7 @@ function CModal({
               </Button>
               <Form.Item
                 name={[`${date}`, `subject`, `subsubject`]}
-                rules={[{ required: true, message: "โปรดเลือกวิชา" }]}
+                rules={[{ required: true, message: 'โปรดเลือกวิชา' }]}
               >
                 <Input disabled />
               </Form.Item>
@@ -208,7 +208,7 @@ function CModal({
       >
         <Row>
           <Col span={24} lg={{ span: 12 }}>
-            <Divider orientation="left" style={{ fontWeight: "bold" }}>
+            <Divider orientation="left" style={{ fontWeight: 'bold' }}>
               เลือกวิชาหลัก
             </Divider>
             <Radio.Group
@@ -228,7 +228,7 @@ function CModal({
             {mainSubjectSelected && (
               <>
                 <div ref={refSubSubject}>
-                  <Divider orientation="left" style={{ fontWeight: "bold" }}>
+                  <Divider orientation="left" style={{ fontWeight: 'bold' }}>
                     เลือกวิชาย่อย
                   </Divider>
                 </div>

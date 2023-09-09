@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react"
-import { Form, Input, Select, Cascader, Radio, Space } from "antd"
+import { Cascader, Form, Input, Radio, Select, Space } from 'antd'
+import { useEffect, useState } from 'react'
 
-import { schoolsize } from "./value"
-import { CascaderOption } from "@/types/cascader"
-import api_province from "./api/api_province_with_amphure_tambon.json"
+import { CascaderOption } from '@/types/cascader'
+import api_province from './api/api_province_with_amphure_tambon.json'
+import { schoolsize } from './value'
 
 // new
-import { useAppContext } from "@/contexts/BookingContext"
+import { useAppContext } from '@/contexts/BookingContext'
 
 const { Option } = Select
 
@@ -44,12 +44,12 @@ export default function Step1() {
 
   return (
     <>
-      <div style={{ textAlign: "left" }}>
-        <h1 style={{ textAlign: "center" }}>รายละเอียดพื้นฐาน</h1>
+      <div style={{ textAlign: 'left' }}>
+        <h1 style={{ textAlign: 'center' }}>รายละเอียดพื้นฐาน</h1>
         <Form.Item
           label="ชื่อโรงเรียน"
           name="schoolname"
-          rules={[{ required: required, message: "โปรดกรอกชื่อโรงเรียน" }]}
+          rules={[{ required: required, message: 'โปรดกรอกชื่อโรงเรียน' }]}
         >
           <Input placeholder="ชื่อโรงเรียน" value={state.schoolname} />
         </Form.Item>
@@ -57,13 +57,9 @@ export default function Step1() {
         <Form.Item
           name="schoolsize"
           label="ขนาดโรงเรียน"
-          rules={[{ required: required, message: "โปรดเลือกขนาดโรงเรียน" }]}
+          rules={[{ required: required, message: 'โปรดเลือกขนาดโรงเรียน' }]}
         >
-          <Select
-            placeholder="ขนาดโรงเรียน"
-            value={state.schoolsize}
-            allowClear
-          >
+          <Select placeholder="ขนาดโรงเรียน" value={state.schoolsize} allowClear>
             {schoolsize.map((el, index) => (
               <Option value={el.option} key={index}>
                 {el.size}
@@ -75,9 +71,7 @@ export default function Step1() {
         <Form.Item
           name="subaddress"
           label="จังหวัด/อำเภอ/ตำบล"
-          rules={[
-            { required: required, message: "โปรดเลือกจังหวัด/อำเภอ/ตำบล" },
-          ]}
+          rules={[{ required: required, message: 'โปรดเลือกจังหวัด/อำเภอ/ตำบล' }]}
         >
           <Cascader
             value={state.subaddress}
@@ -89,14 +83,14 @@ export default function Step1() {
         <Form.Item
           name="operator"
           label="ผู้ดำเนินการ"
-          rules={[{ required: required, message: "โปรดกรอกชื่อผู้ดำเนินการ" }]}
+          rules={[{ required: required, message: 'โปรดกรอกชื่อผู้ดำเนินการ' }]}
         >
           <Input placeholder="ผู้ดำเนินการ" value={state.operator} />
         </Form.Item>
         <Form.Item
           name="position"
           label="ตำแหน่ง"
-          rules={[{ required: required, message: "โปรดกรอกตำแหน่ง" }]}
+          rules={[{ required: required, message: 'โปรดกรอกตำแหน่ง' }]}
         >
           <Input placeholder="ตำแหน่ง" value={state.position} />
         </Form.Item>
@@ -106,11 +100,11 @@ export default function Step1() {
           rules={[
             {
               required: required,
-              message: "โปรดกรอกอีเมล",
+              message: 'โปรดกรอกอีเมล',
             },
             {
-              type: "email",
-              message: "รูปแบบของอีเมลไม่ถูกต้อง",
+              type: 'email',
+              message: 'รูปแบบของอีเมลไม่ถูกต้อง',
             },
           ]}
         >
@@ -122,15 +116,15 @@ export default function Step1() {
           rules={[
             {
               required: true,
-              message: "โปรดกรอกเบอร์โทรศัพท์",
+              message: 'โปรดกรอกเบอร์โทรศัพท์',
             },
             {
               pattern: /^[0-9]*$/,
-              message: "รูปแบบของเบอร์โทรศัพท์ไม่ถูกต้อง",
+              message: 'รูปแบบของเบอร์โทรศัพท์ไม่ถูกต้อง',
             },
             {
               min: 10,
-              message: "รูปแบบของเบอร์โทรศัพท์ไม่ถูกต้อง",
+              message: 'รูปแบบของเบอร์โทรศัพท์ไม่ถูกต้อง',
             },
           ]}
         >
@@ -140,7 +134,7 @@ export default function Step1() {
         <Form.Item
           name="countclassroom"
           label="จํานวนห้องเรียนในคอร์ส (ห้องละ 40 คน)"
-          rules={[{ required: required, message: "โปรดเลือกจำนวนห้องเรียน" }]}
+          rules={[{ required: required, message: 'โปรดเลือกจำนวนห้องเรียน' }]}
           labelAlign="left"
           labelCol={{ span: 0 }}
           wrapperCol={{ span: 0 }}

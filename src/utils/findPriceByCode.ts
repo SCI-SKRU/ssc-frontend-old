@@ -1,13 +1,13 @@
 import {
-  transformJSONSubjects,
   TransformedData,
-} from "@/utils/transformJSONSubjects"
+  transformJSONSubjects,
+} from '@/utils/transformJSONSubjects'
 let jsonData: TransformedData
 
 export async function fetchSubjects(): Promise<TransformedData> {
   const endpoint =
     `${process.env.NEXT_PUBLIC_BASE_API_URL}/subjects` ||
-    "http://localhost:3000/api/v1/subjects"
+    'http://localhost:3000/api/v1/subjects'
   const response = await fetch(endpoint)
   const result = await response.json()
   const resultJSON = transformJSONSubjects(result)
@@ -22,12 +22,12 @@ export function findPriceByCode(targetCode: string) {
   const subject = jsonData.subjects.find((item) =>
     item.subsubject.some((level) => {
       return level.code === targetCode
-    })
+    }),
   )
 
   if (subject) {
     const targetLevel = subject.subsubject.find(
-      (level) => level.code === targetCode
+      (level) => level.code === targetCode,
     )
 
     if (targetLevel) {
@@ -35,7 +35,7 @@ export function findPriceByCode(targetCode: string) {
       return price
     } else {
       console.log(
-        `Level with code ${targetCode} not found in subject ${subject.title}`
+        `Level with code ${targetCode} not found in subject ${subject.title}`,
       )
     }
   } else {

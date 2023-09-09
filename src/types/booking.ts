@@ -1,4 +1,4 @@
-import { ReactNode } from "react"
+import { ReactNode } from 'react'
 
 export interface AppProviderProps {
   children: ReactNode
@@ -32,7 +32,7 @@ export interface AppState {
 }
 
 export interface AppAction {
-  type: "SET_FIELD"
+  type: 'SET_FIELD'
   field: keyof AppState
   value: any
 }
