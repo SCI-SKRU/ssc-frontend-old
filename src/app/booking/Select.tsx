@@ -126,7 +126,7 @@ export default function CustomSelect({
         style={{ marginBottom: 0 }}
       >
         <Form.Item
-          name={[`${date}`, `subject`, `mainsubject`]}
+          name={[`${date}`, 'subject', 'mainsubject']}
           rules={[{ required: true, message: 'โปรดเลือกวิชา' }]}
           initialValue={'เลือกวิชา'}
         >
@@ -149,7 +149,7 @@ export default function CustomSelect({
             style={{ marginBottom: 0 }}
           >
             <Form.Item
-              name={[`${date}`, `subject`, `subsubject`]}
+              name={[`${date}`, 'subject', 'subsubject']}
               rules={[{ required: true, message: 'โปรดเลือกวิชา' }]}
               initialValue={'เลือกวิชา'}
             >
@@ -166,7 +166,7 @@ export default function CustomSelect({
           {disable1Day && (
             <Form.Item
               label="กิจกรรมช่วงค่ำ"
-              name={[`${date}`, `activity`]}
+              name={[`${date}`, 'activity']}
               valuePropName="checked"
               initialValue={false}
               labelCol={{ span: 6 }}

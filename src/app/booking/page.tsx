@@ -154,7 +154,7 @@ export default function Booking() {
                     )}
                     {current < steps.length - 1 && (
                       <Button type="primary" htmlType="submit">
-                        {current == 4 - 1 ? 'สรุปรวม' : 'ต่อไป'}
+                        {current === 4 - 1 ? 'สรุปรวม' : 'ต่อไป'}
                       </Button>
                     )}
                     {current === steps.length - 1 && (

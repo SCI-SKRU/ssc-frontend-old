@@ -25,9 +25,9 @@ export default function Step3({ formRef, form }: Props) {
 
   let timeSlot = state.cours
 
-  if (timeSlot == 3 || timeSlot == 4) {
+  if (timeSlot === 3 || timeSlot === 4) {
     day = 2
-  } else if (timeSlot == 5 || timeSlot == 6) {
+  } else if (timeSlot === 5 || timeSlot === 6) {
     day = 3
   }
 
@@ -66,7 +66,7 @@ export default function Step3({ formRef, form }: Props) {
     let disable1Day = true
     let element = []
     // เลือกคอร์ส 2 เท่านั่น
-    if (timeSlot == 2) {
+    if (timeSlot === 2) {
       return (
         <CustomSelect
           form={form}
@@ -80,9 +80,9 @@ export default function Step3({ formRef, form }: Props) {
     } else if (timeSlot >= 3 && timeSlot <= 4) {
       //เลือกคอร์ส 3 - 4
       for (let i = 0; i < day; i++) {
-        if (i + 2 == timeSlot) {
+        if (i + 2 === timeSlot) {
           endTime = false
-          if (i + 3 == timeSlot) {
+          if (i + 3 === timeSlot) {
             disable1Day = false
           }
         }
@@ -98,12 +98,12 @@ export default function Step3({ formRef, form }: Props) {
           />,
         )
       }
-    } else if (timeSlot == 5) {
+    } else if (timeSlot === 5) {
       //เลือกคอร์ส 5
       for (let i = 0; i < day; i++) {
-        if (i + 3 == timeSlot) {
+        if (i + 3 === timeSlot) {
           endTime = false
-          if (i + 4 == timeSlot) {
+          if (i + 4 === timeSlot) {
             disable1Day = false
           }
         }
@@ -119,10 +119,10 @@ export default function Step3({ formRef, form }: Props) {
           />,
         )
       }
-    } else if (timeSlot == 6) {
+    } else if (timeSlot === 6) {
       //เลือกคอร์ส 6
       for (let i = 0; i < day; i++) {
-        if (i + 4 == timeSlot) {
+        if (i + 4 === timeSlot) {
           disable1Day = false
         }
         element.push(
