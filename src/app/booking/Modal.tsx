@@ -60,7 +60,7 @@ function CModal({
       form.setFieldsValue({
         [`${date}`]: {
           subject: {
-            mainsubject: notEmpty ? text : `Error`,
+            mainsubject: notEmpty ? text : 'Error',
           },
         },
       })
@@ -68,7 +68,7 @@ function CModal({
       form.setFieldsValue({
         [`${date}`]: {
           subject: {
-            subsubject: notEmpty ? text : `Error`,
+            subsubject: notEmpty ? text : 'Error',
           },
         },
       })
@@ -152,7 +152,7 @@ function CModal({
             เลือกวิชา
           </Button>
           <Form.Item
-            name={[`${date}`, `subject`, `mainsubject`]}
+            name={[`${date}`, 'subject', 'mainsubject']}
             rules={[{ required: true, message: 'โปรดเลือกวิชา' }]}
           >
             <Input disabled />
@@ -174,7 +174,7 @@ function CModal({
                 เลือกวิชา
               </Button>
               <Form.Item
-                name={[`${date}`, `subject`, `subsubject`]}
+                name={[`${date}`, 'subject', 'subsubject']}
                 rules={[{ required: true, message: 'โปรดเลือกวิชา' }]}
               >
                 <Input disabled />
@@ -186,7 +186,7 @@ function CModal({
           {disable1Day && (
             <Form.Item
               label="กิจกรรมช่วงค่ำ"
-              name={[`${date}`, `activity`]}
+              name={[`${date}`, 'activity']}
               valuePropName="checked"
               initialValue={false}
               labelCol={{ span: 6 }}
