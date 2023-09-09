@@ -1,26 +1,25 @@
-import React from "react"
-import { Card, Checkbox, Col, Row } from "antd"
-import { convertToThaiDate } from "@/utils/thaiDateUtils"
-import { findNameSubjectByCode, findPriceByCode } from "@/utils/findPriceByCode"
+import { findNameSubjectByCode, findPriceByCode } from '@/utils/findPriceByCode'
+import { convertToThaiDate } from '@/utils/thaiDateUtils'
+import { Card, Checkbox, Col, Row } from 'antd'
 
 // new
-import { useAppContext } from "@/contexts/BookingContext"
+import { useAppContext } from '@/contexts/BookingContext'
 
 const styleFlexBetween = {
-  display: "flex",
-  justifyContent: "space-between",
+  display: 'flex',
+  justifyContent: 'space-between',
 }
 
 const couponAll = [
-  { code: "SSC001", value: 10, unit: "%", expiredAt: "2023-08-10" },
-  { code: "SSC002", value: 1000, unit: "baht", expiredAt: "2023-08-17" },
+  { code: 'SSC001', value: 10, unit: '%', expiredAt: '2023-08-10' },
+  { code: 'SSC002', value: 1000, unit: 'baht', expiredAt: '2023-08-17' },
 ]
 
 const disSchoolSize = [
-  { size: "ขนาดเล็ก", value: 10, unit: "%" },
-  { size: "ขนาดกลาง", value: 15, unit: "%" },
-  { size: "ขนาดใหญ่", value: 20, unit: "%" },
-  { size: "ขนาดใหญ่พิเศษ", value: 25, unit: "%" },
+  { size: 'ขนาดเล็ก', value: 10, unit: '%' },
+  { size: 'ขนาดกลาง', value: 15, unit: '%' },
+  { size: 'ขนาดใหญ่', value: 20, unit: '%' },
+  { size: 'ขนาดใหญ่พิเศษ', value: 25, unit: '%' },
 ]
 
 export default function Result() {
@@ -45,13 +44,13 @@ export default function Result() {
 
   // ค้นหาราคาวิชา
   function findPrice(afterString: string) {
-    const parts = afterString.split(" ")
+    const parts = afterString.split(' ')
     if (parts) {
       const result = findPriceByCode(parts[0])
       sumPrice = sumPrice + Number(result)
       return result
     } else {
-      console.log("Invalid or missing parts in the input.")
+      console.log('Invalid or missing parts in the input.')
     }
   }
 
@@ -90,7 +89,7 @@ export default function Result() {
   // รวมราคา ส่วนลดขนาดโรงเรียน
   function sumDisSchoolSize() {
     const targetSchoolSize = disSchoolSize.find(
-      (size) => Number(size.size) === state.schoolsize
+      (size) => Number(size.size) === state.schoolsize,
     )
     if (targetSchoolSize) {
       const resultCal = sumPrice * (targetSchoolSize.value / 100)
@@ -108,10 +107,10 @@ export default function Result() {
 
   return (
     <>
-      <Row gutter={[16, 16]} style={{ padding: "12px" }}>
+      <Row gutter={[16, 16]} style={{ padding: '12px' }}>
         <Col span={24}>
-          <Card title="สรุป" bordered={false} style={{ textAlign: "left" }}>
-            <div style={{ fontSize: "1rem" }}>
+          <Card title="สรุป" bordered={false} style={{ textAlign: 'left' }}>
+            <div style={{ fontSize: '1rem' }}>
               <p>
                 โรงเรียน: <span>{state.schoolname}</span>
               </p>
@@ -135,20 +134,20 @@ export default function Result() {
                     </p>
                     <div style={styleFlexBetween}>
                       <p>
-                        09.00 - 12.00 :{" "}
+                        09.00 - 12.00 :{' '}
                         {findNameSubjectByCode(
                           String(
                             booking_subject_details?.[`date${i}`]?.subject
-                              .mainsubject
-                          )
+                              .mainsubject,
+                          ),
                         )}
                       </p>
                       <p>
                         {findPrice(
                           String(
                             booking_subject_details?.[`date${i}`]?.subject
-                              .mainsubject
-                          )
+                              .mainsubject,
+                          ),
                         )}
                       </p>
                     </div>
@@ -157,20 +156,20 @@ export default function Result() {
                       <>
                         <div style={styleFlexBetween}>
                           <p>
-                            13.00 - 16.00 :{" "}
+                            13.00 - 16.00 :{' '}
                             {findNameSubjectByCode(
                               String(
                                 booking_subject_details?.[`date${i}`]?.subject
-                                  .subsubject
-                              )
+                                  .subsubject,
+                              ),
                             )}
                           </p>
                           <p>
                             {findPrice(
                               String(
                                 booking_subject_details?.[`date${i}`]?.subject
-                                  .subsubject
-                              )
+                                  .subsubject,
+                              ),
                             )}
                           </p>
                         </div>
@@ -179,7 +178,7 @@ export default function Result() {
                             <p>
                               กิจกรรมช่วงค่ำ :
                               <Checkbox
-                                style={{ marginLeft: "8px" }}
+                                style={{ marginLeft: '8px' }}
                                 checked={
                                   booking_subject_details?.[`date${i}`]
                                     ?.activity
@@ -193,7 +192,7 @@ export default function Result() {
                         )}
                       </>
                     ) : (
-                      ""
+                      ''
                     )}
                     <hr />
                   </div>
@@ -206,8 +205,8 @@ export default function Result() {
                 </div>
                 <hr />
                 <div style={styleFlexBetween}>
-                  <p style={{ fontSize: "1.5rem" }}>รวม</p>
-                  <p style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+                  <p style={{ fontSize: '1.5rem' }}>รวม</p>
+                  <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
                     {sumPrice}
                   </p>
                 </div>

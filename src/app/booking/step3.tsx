@@ -1,15 +1,15 @@
-"use client"
-import React, { useEffect } from "react"
-import { Form, DatePicker, DatePickerProps } from "antd"
-import type { FormInstance } from "antd"
-import type { RangePickerProps } from "antd/es/date-picker"
-import locale from "antd/es/date-picker/locale/th_TH"
-import dayjs from "dayjs"
-import "dayjs/locale/th"
+'use client'
+import type { FormInstance } from 'antd'
+import { DatePicker, DatePickerProps, Form } from 'antd'
+import type { RangePickerProps } from 'antd/es/date-picker'
+import locale from 'antd/es/date-picker/locale/th_TH'
+import dayjs from 'dayjs'
+import 'dayjs/locale/th'
+import { useEffect } from 'react'
 
+import { useAppContext } from '@/contexts/BookingContext'
 // import CModal from "./Modal"
-import CustomSelect from "./Select"
-import { useAppContext } from "@/contexts/BookingContext"
+import CustomSelect from './Select'
 
 let dateSelected: any = []
 let day = 0
@@ -31,14 +31,14 @@ export default function Step3({ formRef, form }: Props) {
     day = 3
   }
 
-  const disabledDate: RangePickerProps["disabledDate"] = (current) => {
-    const today = dayjs().startOf("day")
+  const disabledDate: RangePickerProps['disabledDate'] = (current) => {
+    const today = dayjs().startOf('day')
     // ปิดการใช้งานเดือนที่ 4 นับจากเดือนนี้
-    const fourthMonthStart = today.add(3, "month").startOf("month")
+    const fourthMonthStart = today.add(3, 'month').startOf('month')
     return current && (current < today || current > fourthMonthStart)
   }
 
-  const changeDate: DatePickerProps["onChange"] = (date, dateString) => {
+  const changeDate: DatePickerProps['onChange'] = (date, dateString) => {
     if (date) {
       dateSelected = []
       let cours = state.cours
@@ -46,16 +46,16 @@ export default function Step3({ formRef, form }: Props) {
       else if (cours < 5) cours = 2
       else if (cours < 7) cours = 3
       for (let i = 0; i < cours; i++) {
-        const nextDate = date.clone().add(i, "days").format("YYYY-MM-DD")
+        const nextDate = date.clone().add(i, 'days').format('YYYY-MM-DD')
         dateSelected.push(nextDate)
         if (disableDates.includes(nextDate)) {
           // setError("โปรดเลือกวันที่ที่ไม่ชนกับวันอื่น")
-          formRef.current?.resetFields(["dateSelect"])
+          formRef.current?.resetFields(['dateSelect'])
         }
       }
       dispatch({
-        type: "SET_FIELD",
-        field: "dateSelect",
+        type: 'SET_FIELD',
+        field: 'dateSelect',
         value: dateSelected,
       })
     }
@@ -95,7 +95,7 @@ export default function Step3({ formRef, form }: Props) {
             disable1Day={disable1Day}
             index={i}
             key={i}
-          />
+          />,
         )
       }
     } else if (timeSlot == 5) {
@@ -116,7 +116,7 @@ export default function Step3({ formRef, form }: Props) {
             disable1Day={disable1Day}
             index={i}
             key={i}
-          />
+          />,
         )
       }
     } else if (timeSlot == 6) {
@@ -134,7 +134,7 @@ export default function Step3({ formRef, form }: Props) {
             disable1Day={disable1Day}
             index={i}
             key={i}
-          />
+          />,
         )
       }
     }
@@ -142,18 +142,18 @@ export default function Step3({ formRef, form }: Props) {
   }
 
   useEffect(() => {
-    formRef.current?.resetFields(["dateSelect"])
+    formRef.current?.resetFields(['dateSelect'])
     dateSelected = state.dateSelect
   }, [])
 
   return (
     <>
-      <div style={{ marginTop: "24px" }} />
-      <h1 style={{ textAlign: "center" }}>เลือกคอร์ส</h1>
+      <div style={{ marginTop: '24px' }} />
+      <h1 style={{ textAlign: 'center' }}>เลือกคอร์ส</h1>
       <Form.Item
-        name={"dateSelect"}
+        name={'dateSelect'}
         label="เลือกวันที่"
-        rules={[{ required: true, message: "โปรดเลือกวันที่" }]}
+        rules={[{ required: true, message: 'โปรดเลือกวันที่' }]}
         labelCol={{ span: 10 }}
         wrapperCol={{ span: 7 }}
         initialValue={
@@ -166,7 +166,7 @@ export default function Step3({ formRef, form }: Props) {
           disabledDate={disabledDate}
         />
       </Form.Item>
-      {state.dateSelect[0] ? loopSuject() : ""}
+      {state.dateSelect[0] ? loopSuject() : ''}
     </>
   )
 }
