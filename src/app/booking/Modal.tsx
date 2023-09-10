@@ -1,19 +1,18 @@
 import type { FormInstance, RadioChangeEvent } from 'antd'
 import {
-  Button,
-  Checkbox,
-  Col,
-  Divider,
-  Form,
-  Input,
-  Modal,
-  Radio,
-  Row,
-  Space,
+Button,
+Checkbox,
+Col,
+Divider,
+Form,
+Input,
+Modal,
+Radio,
+Row,
+Space,
 } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 
-import { fetchSubjects } from '@/utils/findPriceByCode'
 import { convertToThaiDate } from '@/utils/thaiDateUtils'
 import { TransformedData } from '@/utils/transformJSONSubjects'
 
@@ -44,7 +43,7 @@ function CModal({
   const refSubSubject = useRef<HTMLDivElement>(null)
 
   async function fetchSubject() {
-    setSubjects(await fetchSubjects())
+    // setSubjects(await fetchSubjects())
   }
 
   const showModal = (e: any, isMainSub: number) => {

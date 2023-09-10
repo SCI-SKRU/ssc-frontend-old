@@ -1,24 +1,35 @@
+import { AppState } from '@/types/booking'
 import {
 TransformedData,
 transformJSONSubjects,
 } from '@/utils/transformJSONSubjects'
 let jsonData: TransformedData
 
-export async function fetchSubjects(): Promise<TransformedData> {
-  const endpoint =
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/subjects` ||
-    'http://localhost:3000/api/v1/subjects'
-  const response = await fetch(endpoint)
-  const result = await response.json()
-  const resultJSON = transformJSONSubjects(result)
-  jsonData = resultJSON
-  return resultJSON
+export async function fetchSubjectsByDate(state: AppState) {
+  try {
+    let startDate = ''
+    let endDate = ''
+    if (state.dateSelect.length === 1) {
+      startDate = state.dateSelect[0]
+      endDate = state.dateSelect[0]
+    } else {
+      startDate = state.dateSelect[0]
+      endDate = state.dateSelect[state.dateSelect.length - 1]
+    }
+    const response = await fetch(
+      `https://4dc0-159-223-93-76.ngrok-free.app/api/v1/subjects?startDate=${startDate}&endDate=${endDate}`,
+    )
+    const data = await response.json()
+    const resultJSON = transformJSONSubjects(data)
+    jsonData = resultJSON
+    return data.subjects
+  } catch (error) {
+    console.error('Error fetching data:', error)
+    return []
+  }
 }
 
-// fetchSubjects()
-
 export function findPriceByCode(targetCode: string) {
-  fetchSubjects()
   const subject = jsonData.subjects.find((item) =>
     item.subsubject.some((level) => {
       return level.code === targetCode
@@ -44,12 +55,16 @@ export function findPriceByCode(targetCode: string) {
 }
 
 export function findNameSubjectByCode(code: string) {
-  for (const subject of jsonData.subjects) {
-    for (const subsubject of subject.subsubject) {
+  let name = null;
+  
+  jsonData.subjects.map(subject => {
+    subject.subsubject.map(subsubject => {
       if (subsubject.code === code) {
-        return subsubject.name
+        name = subsubject.name;
       }
-    }
-  }
-  return null // Return null if code is not found
+    });
+  });
+
+  return name;
 }
+

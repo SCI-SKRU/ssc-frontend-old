@@ -3,10 +3,11 @@ import { Checkbox, Divider, Form, Input, Select } from 'antd'
 import { useEffect, useState } from 'react'
 
 import { useAppContext } from '@/contexts/BookingContext'
+import { fetchSubjectsByDate } from '@/utils/findPriceByCode'
 import { convertToThaiDate } from '@/utils/thaiDateUtils'
 
 const handleChange = (value: string) => {
-  // console.log(value)
+  console.log(value)
 }
 
 type Options1 = {
@@ -49,31 +50,9 @@ export default function CustomSelect({
   const [option, setOption] = useState<Options1[]>()
   const { state } = useAppContext()
 
-  const fetchData = async () => {
-    try {
-      let startDate = ''
-      let endDate = ''
-      if (state.dateSelect.length === 1) {
-        startDate = state.dateSelect[0]
-        endDate = state.dateSelect[0]
-      } else {
-        startDate = state.dateSelect[0]
-        endDate = state.dateSelect[state.dateSelect.length - 1]
-      }
-      const response = await fetch(
-        `https://4dc0-159-223-93-76.ngrok-free.app/api/v1/subjects?startDate=${startDate}&endDate=${endDate}`,
-      )
-      const data = await response.json()
-      return data.subjects
-    } catch (error) {
-      console.error('Error fetching data:', error)
-      return []
-    }
-  }
-
   useEffect(() => {
     const fetchAndSetData = async () => {
-      const fetchedData = await fetchData()
+      const fetchedData = await fetchSubjectsByDate(state)
       let convertData: Options1[] = []
 
       fetchedData.forEach((course: Subjects) => {
@@ -128,11 +107,9 @@ export default function CustomSelect({
         <Form.Item
           name={[`${date}`, `subject`, `mainsubject`]}
           rules={[{ required: true, message: 'โปรดเลือกวิชา' }]}
-          initialValue={'เลือกวิชา'}
         >
           <Select
-            // defaultValue="เลือกวิชา"
-            // style={{ width: "300px" }}
+            placeholder="เลือกวิชา"
             onChange={(e) => handleChange(e)}
             options={option || []}
           />
@@ -151,12 +128,10 @@ export default function CustomSelect({
             <Form.Item
               name={[`${date}`, `subject`, `subsubject`]}
               rules={[{ required: true, message: 'โปรดเลือกวิชา' }]}
-              initialValue={'เลือกวิชา'}
             >
               <Select
-                // defaultValue="เลือกวิชา"
-                // style={{ width: "300px" }}
-                onChange={handleChange}
+                placeholder="เลือกวิชา" 
+                onChange={(e) => handleChange(e)}
                 options={option || []}
               />
             </Form.Item>

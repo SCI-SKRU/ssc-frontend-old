@@ -1,15 +1,15 @@
 'use client'
 
 import {
-  Button,
-  Col,
-  ConfigProvider,
-  Form,
-  FormInstance,
-  Row,
-  Steps,
-  message,
-  theme,
+Button,
+Col,
+ConfigProvider,
+Form,
+FormInstance,
+Row,
+Steps,
+message,
+theme,
 } from 'antd'
 import React, { useRef, useState } from 'react'
 
@@ -100,7 +100,7 @@ export default function Booking() {
     scrollToTop()
   }
 
-  const prev = () => {
+  const prev = () => {    
     setCurrent(current - 1)
     scrollToTop()
   }

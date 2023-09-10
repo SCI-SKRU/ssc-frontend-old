@@ -5,7 +5,7 @@ import type { RangePickerProps } from 'antd/es/date-picker'
 import locale from 'antd/es/date-picker/locale/th_TH'
 import dayjs from 'dayjs'
 import 'dayjs/locale/th'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useAppContext } from '@/contexts/BookingContext'
 // import CModal from "./Modal"
@@ -22,6 +22,7 @@ type Props = {
 
 export default function Step3({ formRef, form }: Props) {
   const { state, dispatch } = useAppContext()
+  const [loadingSelect, setLoadingSelect] = useState(false)
 
   let timeSlot = state.cours
 
@@ -39,6 +40,7 @@ export default function Step3({ formRef, form }: Props) {
   }
 
   const changeDate: DatePickerProps['onChange'] = (date, dateString) => {
+    setLoadingSelect(false)
     if (date) {
       dateSelected = []
       let cours = state.cours
@@ -58,6 +60,9 @@ export default function Step3({ formRef, form }: Props) {
         field: 'dateSelect',
         value: dateSelected,
       })
+      setTimeout(() => {
+        setLoadingSelect(true)
+      }, 100);
     }
   }
 
@@ -156,9 +161,9 @@ export default function Step3({ formRef, form }: Props) {
         rules={[{ required: true, message: 'โปรดเลือกวันที่' }]}
         labelCol={{ span: 10 }}
         wrapperCol={{ span: 7 }}
-        initialValue={
-          state.dateSelect[0] ? dayjs(state.dateSelect[0]) : undefined
-        }
+        // initialValue={
+        //   state.dateSelect[0] ? dayjs(state.dateSelect[0]) : undefined
+        // }
       >
         <DatePicker
           locale={locale}
@@ -166,7 +171,7 @@ export default function Step3({ formRef, form }: Props) {
           disabledDate={disabledDate}
         />
       </Form.Item>
-      {state.dateSelect[0] ? loopSuject() : ''}
+      {loadingSelect ? loopSuject() : ''}
     </>
   )
 }
