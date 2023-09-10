@@ -1,6 +1,6 @@
 import {
-  TransformedData,
-  transformJSONSubjects,
+TransformedData,
+transformJSONSubjects,
 } from '@/utils/transformJSONSubjects'
 let jsonData: TransformedData
 
@@ -15,7 +15,7 @@ export async function fetchSubjects(): Promise<TransformedData> {
   return resultJSON
 }
 
-fetchSubjects()
+// fetchSubjects()
 
 export function findPriceByCode(targetCode: string) {
   fetchSubjects()
