@@ -47,12 +47,15 @@ function CModal({
     setSubjects(await fetchSubjects())
   }
 
-  const showModal = (e: any, isMainSub: number) => {
+  const showModal = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>,
+    isMainSub: number,
+  ) => {
     setIsMainSub(isMainSub)
     setIsModalOpen(true)
   }
 
-  const handleOk = (e: any) => {
+  const handleOk = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const notEmpty = mainSubjectSelected && subSubjectSelected
     const text = `${titleMainSubject} ${subSubjectSelected}`
     // isMainSub เป็น 1 วิชาหลัก เป็น 2 วิชารอง
