@@ -1,12 +1,11 @@
 import { Cascader, Form, Input, Radio, Select, Space } from 'antd'
 import { useEffect, useState } from 'react'
 
-import { CascaderOption } from '@/types/cascader'
-import api_province from '../api/api_province_with_amphure_tambon.json'
-import { schoolsize } from '../value'
-
-// new
 import { useAppContext } from '@/contexts/BookingContext'
+import type { Amphure, Province, Provinces, Tambon } from '@/types/address'
+import { CascaderOption } from '@/types/cascader'
+import provincesJSON from '../api/provinces.json'
+import { schoolsize } from '../value'
 
 const { Option } = Select
 
@@ -14,15 +13,17 @@ const { Option } = Select
 const required: boolean = true
 
 function getProvince(): CascaderOption[] {
-  return api_province.map((data: any) => ({
-    label: data.name_th,
-    value: data.name_th,
-    children: data.amphure.map((item: any) => ({
-      label: item.name_th,
-      value: item.name_th,
-      children: item.tambon.map((item2: any) => ({
-        label: item2.name_th,
-        value: item2.name_th,
+  const provinces: Provinces = provincesJSON
+
+  return provinces.map((province: Province) => ({
+    label: province.name_th,
+    value: province.name_th,
+    children: province.amphure.map((amphure: Amphure) => ({
+      label: amphure.name_th,
+      value: amphure.name_th,
+      children: amphure.tambon.map((tambon: Tambon) => ({
+        label: tambon.name_th,
+        value: tambon.name_th,
       })),
     })),
   }))
