@@ -52,17 +52,6 @@ export default function Booking() {
     },
   ]
 
-  const scrollToTop = () => {
-    setTimeout(() => {
-      if (refSubSubject.current) {
-        refSubSubject.current.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        })
-      }
-    }, 200)
-  }
-
   const next = (values: any) => {
     // new
     if (values.dateSelect) {
@@ -87,7 +76,6 @@ export default function Booking() {
         value: dateSelected,
       })
       setCurrent(current + 1)
-      scrollToTop()
       return
     }
 
@@ -97,12 +85,10 @@ export default function Booking() {
     })
 
     setCurrent(current + 1)
-    scrollToTop()
   }
 
   const prev = () => {
     setCurrent(current - 1)
-    scrollToTop()
   }
 
   const items = steps.map((item) => ({ key: item.title, title: item.title }))
