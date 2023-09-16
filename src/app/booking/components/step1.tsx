@@ -62,7 +62,7 @@ export default function Step1() {
         >
           <Select placeholder="ขนาดโรงเรียน" value={state.schoolsize} allowClear>
             {schoolsize.map((el, index) => (
-              <Option value={el.option} key={index}>
+              <Option value={el.option} key={el.id}>
                 {el.size}
               </Option>
             ))}
