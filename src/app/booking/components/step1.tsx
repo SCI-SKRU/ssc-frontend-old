@@ -50,7 +50,7 @@ export default function Step1() {
         <Form.Item
           label="ชื่อโรงเรียน"
           name="schoolname"
-          rules={[{ required: required, message: 'โปรดกรอกชื่อโรงเรียน' }]}
+          rules={[{ required, message: 'โปรดกรอกชื่อโรงเรียน' }]}
         >
           <Input placeholder="ชื่อโรงเรียน" value={state.schoolname} />
         </Form.Item>
@@ -58,7 +58,7 @@ export default function Step1() {
         <Form.Item
           name="schoolsize"
           label="ขนาดโรงเรียน"
-          rules={[{ required: required, message: 'โปรดเลือกขนาดโรงเรียน' }]}
+          rules={[{ required, message: 'โปรดเลือกขนาดโรงเรียน' }]}
         >
           <Select placeholder="ขนาดโรงเรียน" value={state.schoolsize} allowClear>
             {schoolsize.map((el, index) => (
@@ -72,7 +72,7 @@ export default function Step1() {
         <Form.Item
           name="subaddress"
           label="จังหวัด/อำเภอ/ตำบล"
-          rules={[{ required: required, message: 'โปรดเลือกจังหวัด/อำเภอ/ตำบล' }]}
+          rules={[{ required, message: 'โปรดเลือกจังหวัด/อำเภอ/ตำบล' }]}
         >
           <Cascader
             value={state.subaddress}
@@ -84,14 +84,14 @@ export default function Step1() {
         <Form.Item
           name="operator"
           label="ผู้ดำเนินการ"
-          rules={[{ required: required, message: 'โปรดกรอกชื่อผู้ดำเนินการ' }]}
+          rules={[{ required, message: 'โปรดกรอกชื่อผู้ดำเนินการ' }]}
         >
           <Input placeholder="ผู้ดำเนินการ" value={state.operator} />
         </Form.Item>
         <Form.Item
           name="position"
           label="ตำแหน่ง"
-          rules={[{ required: required, message: 'โปรดกรอกตำแหน่ง' }]}
+          rules={[{ required, message: 'โปรดกรอกตำแหน่ง' }]}
         >
           <Input placeholder="ตำแหน่ง" value={state.position} />
         </Form.Item>
@@ -100,7 +100,7 @@ export default function Step1() {
           label="อีเมล"
           rules={[
             {
-              required: required,
+              required,
               message: 'โปรดกรอกอีเมล',
             },
             {
@@ -135,7 +135,7 @@ export default function Step1() {
         <Form.Item
           name="countclassroom"
           label="จํานวนห้องเรียนในคอร์ส (ห้องละ 40 คน)"
-          rules={[{ required: required, message: 'โปรดเลือกจำนวนห้องเรียน' }]}
+          rules={[{ required, message: 'โปรดเลือกจำนวนห้องเรียน' }]}
           labelAlign="left"
           labelCol={{ span: 0 }}
           wrapperCol={{ span: 0 }}
