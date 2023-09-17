@@ -1,7 +1,10 @@
-import { useAppContext } from '@/contexts/BookingContext'
 import type { CheckboxOptionType } from 'antd'
 import { Form, Radio } from 'antd'
 import { useEffect, useState } from 'react'
+
+import config from '@/config'
+import { useAppContext } from '@/contexts/BookingContext'
+import { Course, GetCourses } from '@/types/course'
 
 export default function Step2() {
   const [course, setCourse] = useState<CheckboxOptionType[]>([])
@@ -9,12 +12,9 @@ export default function Step2() {
   const { state, dispatch } = useAppContext()
 
   async function fetchCourse() {
-    const endpoint =
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/courses` ||
-      'http://localhost:3000/api/v1/courses'
-    const response = await fetch(endpoint)
-    const result = await response.json()
-    const transformedCourses = result.courses.map((course: any) => ({
+    const response = await fetch(`${config.environments.BASE_API_URL}/courses`)
+    const result: GetCourses = await response.json()
+    const transformedCourses = result.courses.map((course: Course) => ({
       label: `${course.name} ${course.description}`,
       value: course.timeSlot,
     })) as []

@@ -1,12 +1,11 @@
 import { Cascader, Form, Input, Radio, Select, Space } from 'antd'
 import { useEffect, useState } from 'react'
 
-import { CascaderOption } from '@/types/cascader'
-import api_province from './api/api_province_with_amphure_tambon.json'
-import { schoolsize } from './value'
-
-// new
 import { useAppContext } from '@/contexts/BookingContext'
+import type { Amphure, Province, Provinces, Tambon } from '@/types/address'
+import { CascaderOption } from '@/types/cascader'
+import provincesJSON from '../api/provinces.json'
+import { schoolsize } from '../value'
 
 const { Option } = Select
 
@@ -14,15 +13,17 @@ const { Option } = Select
 const required: boolean = true
 
 function getProvince(): CascaderOption[] {
-  return api_province.map((data: any) => ({
-    label: data.name_th,
-    value: data.name_th,
-    children: data.amphure.map((item: any) => ({
-      label: item.name_th,
-      value: item.name_th,
-      children: item.tambon.map((item2: any) => ({
-        label: item2.name_th,
-        value: item2.name_th,
+  const provinces: Provinces = provincesJSON
+
+  return provinces.map((province: Province) => ({
+    label: province.name_th,
+    value: province.name_th,
+    children: province.amphure.map((amphure: Amphure) => ({
+      label: amphure.name_th,
+      value: amphure.name_th,
+      children: amphure.tambon.map((tambon: Tambon) => ({
+        label: tambon.name_th,
+        value: tambon.name_th,
       })),
     })),
   }))
@@ -49,7 +50,7 @@ export default function Step1() {
         <Form.Item
           label="ชื่อโรงเรียน"
           name="schoolname"
-          rules={[{ required: required, message: 'โปรดกรอกชื่อโรงเรียน' }]}
+          rules={[{ required, message: 'โปรดกรอกชื่อโรงเรียน' }]}
         >
           <Input placeholder="ชื่อโรงเรียน" value={state.schoolname} />
         </Form.Item>
@@ -57,11 +58,11 @@ export default function Step1() {
         <Form.Item
           name="schoolsize"
           label="ขนาดโรงเรียน"
-          rules={[{ required: required, message: 'โปรดเลือกขนาดโรงเรียน' }]}
+          rules={[{ required, message: 'โปรดเลือกขนาดโรงเรียน' }]}
         >
           <Select placeholder="ขนาดโรงเรียน" value={state.schoolsize} allowClear>
             {schoolsize.map((el, index) => (
-              <Option value={el.option} key={index}>
+              <Option value={el.option} key={el.id}>
                 {el.size}
               </Option>
             ))}
@@ -71,7 +72,7 @@ export default function Step1() {
         <Form.Item
           name="subaddress"
           label="จังหวัด/อำเภอ/ตำบล"
-          rules={[{ required: required, message: 'โปรดเลือกจังหวัด/อำเภอ/ตำบล' }]}
+          rules={[{ required, message: 'โปรดเลือกจังหวัด/อำเภอ/ตำบล' }]}
         >
           <Cascader
             value={state.subaddress}
@@ -83,14 +84,14 @@ export default function Step1() {
         <Form.Item
           name="operator"
           label="ผู้ดำเนินการ"
-          rules={[{ required: required, message: 'โปรดกรอกชื่อผู้ดำเนินการ' }]}
+          rules={[{ required, message: 'โปรดกรอกชื่อผู้ดำเนินการ' }]}
         >
           <Input placeholder="ผู้ดำเนินการ" value={state.operator} />
         </Form.Item>
         <Form.Item
           name="position"
           label="ตำแหน่ง"
-          rules={[{ required: required, message: 'โปรดกรอกตำแหน่ง' }]}
+          rules={[{ required, message: 'โปรดกรอกตำแหน่ง' }]}
         >
           <Input placeholder="ตำแหน่ง" value={state.position} />
         </Form.Item>
@@ -99,7 +100,7 @@ export default function Step1() {
           label="อีเมล"
           rules={[
             {
-              required: required,
+              required,
               message: 'โปรดกรอกอีเมล',
             },
             {
@@ -134,7 +135,7 @@ export default function Step1() {
         <Form.Item
           name="countclassroom"
           label="จํานวนห้องเรียนในคอร์ส (ห้องละ 40 คน)"
-          rules={[{ required: required, message: 'โปรดเลือกจำนวนห้องเรียน' }]}
+          rules={[{ required, message: 'โปรดเลือกจำนวนห้องเรียน' }]}
           labelAlign="left"
           labelCol={{ span: 0 }}
           wrapperCol={{ span: 0 }}

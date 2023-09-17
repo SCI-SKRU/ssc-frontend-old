@@ -11,24 +11,27 @@ import { useAppContext } from '@/contexts/BookingContext'
 // import CModal from "./Modal"
 import CustomSelect from './Select'
 
-let dateSelected: any = []
+let dateSelected: string[]
 let day = 0
-let disableDates: any[] = []
+const disableDates: string[] = []
 
 type Props = {
-  formRef: any
+  formRef: React.RefObject<FormInstance<any>>
   form: FormInstance
 }
 
 export default function Step3({ formRef, form }: Props) {
   const { state, dispatch } = useAppContext()
 
-  let timeSlot = state.cours
+  const timeSlot = state.cours
 
-  if (timeSlot === 3 || timeSlot === 4) {
-    day = 2
-  } else if (timeSlot === 5 || timeSlot === 6) {
-    day = 3
+  switch (timeSlot) {
+    case 3 || 4:
+      day = 2
+      break
+    case 5 || 6:
+      day = 3
+      break
   }
 
   const disabledDate: RangePickerProps['disabledDate'] = (current) => {
